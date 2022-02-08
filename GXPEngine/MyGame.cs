@@ -4,14 +4,18 @@ using System.Drawing;
 
 public class MyGame : Game
 {
-	public MyGame() : base(800, 600, false)		
+	private Player player;
+	
+	
+	public MyGame() : base(1920, 1080, false)
 	{
-		
+		player = new Player();
+		AddChild(player);
 	}
 	
 	void Update()
 	{
-	
+		
 	}
 
 	static void Main()							
