@@ -4,23 +4,39 @@ namespace GXPEngine
 {
     public class Player : Entity
     {
-        public Player() : base("barry.png", 7, 1)
+        public Player() : base("player_feet.png", "barry.png", 7,1)
         {
-            _animationDelay = 150;
+            SetAnimationDelay(170);
             speed = 0.5f;
-
+            
+            EasyDraw canvas = new EasyDraw(width,height, false);
+            canvas.Fill(255,0,0);
+            canvas.ShapeAlign(CenterMode.Min,CenterMode.Min);
+            canvas.Rect(0,0,width,height);
+            AddChildAt(canvas,0);
+            
+            
+            SetScaleXY(3);
         }
 
 
 
         void Update()
         {
-            Animate(Time.deltaTime);
+            model.Animate(Time.deltaTime);
             
-            GetInputs();
-            
+
             velocity.Add(GetInputs());
+
+            if (velocity.Magnitude() == 0)
+            {
+                
+            }
+            
             UpdateMovement();
+
+
+            UpdateState();
             velocity.Set(0,0);
             
             
