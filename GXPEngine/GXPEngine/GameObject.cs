@@ -37,6 +37,20 @@ namespace GXPEngine
 			}
 		}
 
+		public int CompareTo(GameObject other)
+		{
+			if (other.y > this.y)
+			{
+				return 1;
+			}
+			else if (other.y < this.y)
+			{
+				return -1;
+			}
+
+			return 0;
+		}
+
 		/// <summary>
 		/// Create and return a collider to use for this game object. Null is allowed.
 		/// </summary>
