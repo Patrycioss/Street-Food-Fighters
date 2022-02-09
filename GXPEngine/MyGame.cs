@@ -10,11 +10,17 @@ public class MyGame : Game
 	private Temp temp;
 
 	private TempEnemy[] tempEnemies;
-
+	
 	public MyGame() : base(1366, 768, false)
 	{
 		//Makes a player and a temporary checkers sprite to test collisions (uses the barry.png)
 
+		//4 x 64 =  256 
+		//768 - 256 = 512
+		//768 - 320 = 448
+
+		debugMode = false;
+		
 		Sprite background = new Sprite("background.png",addCollider:false);
 		AddChild(background);
 		
@@ -41,12 +47,16 @@ public class MyGame : Game
 	
 	void Update()
 	{
+
 		if (Input.GetKey(Key.B))
 		{
-			player.FeetHitBoxIsVisible = !player.FeetHitBoxIsVisible;
+			player.FeetHitBoxIsVisible = true;
+			foreach (GameObject gameObject in GetChildren())
+			{
+				gameObject.debugMode = !gameObject.debugMode;
+			}
 		}
-
-		Console.WriteLine(player.y);
+		
 		
 		SortDisplayHierarchy();
 	}
