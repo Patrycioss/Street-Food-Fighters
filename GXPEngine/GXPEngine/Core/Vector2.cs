@@ -2,12 +2,30 @@ namespace GXPEngine.Core
 {
     public struct Vector2
     {
+        public bool Equals(Vector2 other)
+        {
+            return x.Equals(other.x) && y.Equals(other.y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Vector2 other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (x.GetHashCode() * 397) ^ y.GetHashCode();
+            }
+        }
+
         public float x;
         public float y;
 
         //CONSTRUCTOR	
         /// <summary>
-        ///     Makes a vector based on a given x and y value or an existing vector
+        /// Makes a vector based on a given x and y value or an existing vector
         /// </summary>
         public Vector2(float x, float y)
         {
@@ -38,15 +56,35 @@ namespace GXPEngine.Core
         {
             return new Vector2(left.x - right.x, left.y - right.y);
         }
+        
+        public static bool operator !=(Vector2 left, Vector2 right)
+        {
+            if (left.x != right.x || left.y != right.y)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public static bool operator ==(Vector2 left, Vector2 right)
+        {
+            if (left.x == right.x && left.y == right.y)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
 
         //ADDITION
         /// <summary>
         ///     Adds a vector onto this one, can be used with an x and y or another vector
         /// </summary>
-        public void Add(float x, float y)
+        public void Add(float plusX, float plusY)
         {
-            this.x += x;
-            this.y += y;
+            this.x += plusX;
+            this.y += plusY;
         }
 
         public void Add(Vector2 vector)
@@ -73,10 +111,10 @@ namespace GXPEngine.Core
         /// <summary>
         ///     Sets the vector to a given x and y value
         /// </summary>
-        public void Set(float x, float y)
+        public void Set(float newX, float newY)
         {
-            this.x = x;
-            this.y = y;
+            this.x = newX;
+            this.y = newY;
         }
 
         //DIVIDATION	
