@@ -8,44 +8,20 @@ namespace GXPEngine
         {
             SetAnimationDelay(170);
             speed = 0.5f;
-            
-            EasyDraw canvas = new EasyDraw(width,height, false);
-            canvas.Fill(255,0,0);
-            canvas.ShapeAlign(CenterMode.Min,CenterMode.Min);
-            canvas.Rect(0,0,width,height);
-            AddChildAt(canvas,0);
-            
-            
             SetScaleXY(3);
         }
 
-
-
-        void Update()
+        
+        protected override void Update()
         {
-            model.Animate(Time.deltaTime);
-            
-
-            velocity.Add(GetInputs());
-
-            if (velocity.Magnitude() == 0)
-            {
-                
-            }
-            
-            UpdateMovement();
-
-
-            UpdateState();
-            velocity.Set(0,0);
-            
-            
+            velocity.Add(GetKeyInputs());
+            base.Update();
         }
 
-        private Vector2 GetInputs()
+        /// <returns>A directional vector with information from arrow keys pressed by the player.</returns>
+        private Vector2 GetKeyInputs()
         {
-            Vector2 vector2;
-            vector2 = new Vector2(0, 0);
+            Vector2 vector2 = new Vector2(0, 0);
             
             if (Input.GetKey(Key.UP))
             {
