@@ -19,6 +19,7 @@ namespace GXPEngine
 		private bool destroyed = false;
 
 		public bool debugMode = false;
+		protected MyGame myGame;
 
 		//------------------------------------------------------------------------------------------------------------------------
 		//														GameObject()
@@ -37,6 +38,8 @@ namespace GXPEngine
 			if (addCollider) {
 				_collider = createCollider ();
 			}
+
+			myGame = (MyGame) game;
 		}
 
 		public int CompareTo(GameObject other)
