@@ -52,7 +52,7 @@ namespace GXPEngine
                 velocity.Set(0,0);
             }
 
-            if (FeetHitBoxIsVisible)
+            if (debugMode)
             {
                 canvas.Fill(255,0,0);
                 canvas.ShapeAlign(CenterMode.Min,CenterMode.Min);

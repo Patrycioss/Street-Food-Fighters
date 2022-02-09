@@ -81,6 +81,9 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Stage.cs" />
+    <Compile Include="StageLoader.cs" />
+    <Compile Include="Stages.cs" />
     <Compile Include="Temp.cs" />
     <Compile Include="TempEnemy.cs" />
   </ItemGroup>

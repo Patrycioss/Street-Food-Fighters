@@ -6,5 +6,10 @@
         {
             SetScaleXY(1,2);
         }
+
+        void Update()
+        {
+            base.Update();
+        }
     }
 }
