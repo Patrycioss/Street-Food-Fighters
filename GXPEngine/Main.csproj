@@ -85,6 +85,7 @@
     <Compile Include="StageLoader.cs" />
     <Compile Include="Stages.cs" />
     <Compile Include="Temp.cs" />
-    <Compile Include="TempEnemy.cs" />
+    <Compile Include="Enemy.cs" />
+    <Compile Include="Weapon.cs" />
   </ItemGroup>
 </Project>

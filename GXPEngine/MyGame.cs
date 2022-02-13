@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 public class MyGame : Game
 {
 	public Player player;
-	private TempEnemy[] tempEnemies;
+	// private TempEnemy[] tempEnemies;
 	
 	public MyGame() : base(1366, 768, false)
 	{
@@ -31,19 +31,24 @@ public class MyGame : Game
 		barrier.SetXY(width/2,height/2);
 		AddChild(barrier);
 		
-
-		tempEnemies = new TempEnemy[10];
+		//
+		// tempEnemies = new TempEnemy[2];
 		//
 		// for (int i = 0; i < tempEnemies.Length; i++)
 		// {
 		// 	tempEnemies[i] = new TempEnemy();
-		// 	tempEnemies[i].SetXY(Utils.Random(10,width-10),Utils.Random(10,height-10));
+		// 	tempEnemies[i].SetXY(Utils.Random(10,width-10),Utils.Random(height*0.7f,height-10)); //temporarily spawn random enemies
+		// 	tempEnemies[i].SetTarget(player);
+		// 	tempEnemies[i].FeetHitBoxIsVisible = false;
 		// 	AddChild(tempEnemies[i]);
 		// }
-		
+		//
+		//
+
+		Console.WriteLine(StageLoader.GetEnemies().Count);
 		
 
-		
+
 	}
 	
 	void Update()

@@ -73,16 +73,17 @@ namespace GXPEngine
                         break;
                     
                     case 35:
-                        Console.WriteLine("? ");
                         myGame.player = new Player();
                         myGame.player.SetXY(x,y);
                         AddChild(myGame.player);
+                        myGame.player.SetWeapon(new BurgerPunch());
                         break;
                     
                     case 25:
-                        TempEnemy tempEnemy = new TempEnemy();
-                        tempEnemy.SetXY(x,y);
-                        AddChild(tempEnemy);
+                        Enemy enemy = new PizzaZombie();
+                        enemy.SetXY(x,y);
+                        enemy.SetTarget(myGame.player);
+                        AddChild(enemy);
                         break;
                 }
             }
@@ -122,6 +123,34 @@ namespace GXPEngine
                     }
                 }
             }
+        }
+        
+        /// <returns>A list of all entities in this stage</returns>
+        public List<Entity> GetEntities()
+        {
+            List<Entity> entities = new List<Entity>();
+            foreach (GameObject gameObject in GetChildren())
+            {
+                if (gameObject is Entity)
+                {
+                    entities.Add((Entity)gameObject);
+                }    
+            }
+            return entities;
+        }
+
+        /// <returns>A list of all enemies in this stage</returns>
+        public List<Enemy> GetEnemies()
+        {
+            List<Enemy> enemies = new List<Enemy>();
+            foreach (GameObject gameObject in GetEntities())
+            {
+                if (gameObject is Enemy)
+                {
+                    enemies.Add((Enemy)gameObject);
+                }
+            }
+            return enemies;
         }
     }
 }
