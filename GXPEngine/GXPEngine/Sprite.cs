@@ -15,8 +15,8 @@ namespace GXPEngine
 		private uint _color = 0xFFFFFF;
 		private float _alpha = 1.0f;
 		
-		protected bool _mirrorX = false;
-		protected bool _mirrorY = false;
+		protected bool mirrorX = false;
+		protected bool mirrorY = false;
 
 		public BlendMode blendMode = null;
 
@@ -95,10 +95,10 @@ namespace GXPEngine
 		//														setUVs
 		//------------------------------------------------------------------------------------------------------------------------
 		protected virtual void setUVs() {
-			float left = _mirrorX?1.0f:0.0f;
-			float right = _mirrorX?0.0f:1.0f;
-			float top = _mirrorY?1.0f:0.0f;
-			float bottom = _mirrorY?0.0f:1.0f;
+			float left = mirrorX?1.0f:0.0f;
+			float right = mirrorX?0.0f:1.0f;
+			float top = mirrorY?1.0f:0.0f;
+			float bottom = mirrorY?0.0f:1.0f;
 			_uvs = new float[8] { left, top, right, top, right, bottom, left, bottom };
 		}
 
@@ -253,8 +253,8 @@ namespace GXPEngine
 		/// If set to <c>true</c> to enable mirroring in y direction.
 		/// </param>
 		public void Mirror(bool mirrorX, bool mirrorY) {
-			_mirrorX = mirrorX;
-			_mirrorY = mirrorY;
+			this.mirrorX = mirrorX;
+			this.mirrorY = mirrorY;
 			setUVs();
 		}
 				

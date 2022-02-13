@@ -8,7 +8,7 @@ namespace GXPEngine
     /// </summary>
     public static class StageLoader
     {
-        public static Stage currentStage;
+        private static Stage currentStage;
         
         /// <summary>
         /// Load in a new stage and get rid of the previous one if there is still one
@@ -57,6 +57,20 @@ namespace GXPEngine
         {
             currentStage.AddChildAt(gameObject,index);
         }
+
+        /// <returns>A list of enemies in the current stage</returns>
+        public static List<Enemy> GetEnemies()
+        {
+            return currentStage.GetEnemies();
+        }
+
+     
+        /// <returns>A list of enemies in the current stage</returns>
+        public static List<Entity> GetEntities()
+        {
+            return currentStage.GetEntities();
+        }
+        
     }
     
 }

@@ -181,11 +181,11 @@ namespace GXPEngine
 				//end fix2
 			}
 
-			float frameLeft = _mirrorX?right:left;
-			float frameRight = _mirrorX?left:right;
+			float frameLeft = mirrorX?right:left;
+			float frameRight = mirrorX?left:right;
 
-			float frameTop = _mirrorY?bottom:top;
-			float frameBottom = _mirrorY?top:bottom;
+			float frameTop = mirrorY?bottom:top;
+			float frameBottom = mirrorY?top:bottom;
 
 			_uvs = new float[8] {
 				frameLeft, frameTop, frameRight, frameTop,
