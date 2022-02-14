@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using GXPEngine.Abilities;
+using GXPEngine.Entities;
 using TiledMapParser;
 
-namespace GXPEngine
+namespace GXPEngine.StageManagement
 {
     public class Stage : GameObject
     {
         private Map stageData;
         private int tileSize;
-        public int stageWidth;
-        public int stageHeight;
+        
+        private int stageWidth;
+        private int stageHeight;
 
-        public readonly Stages stage;
+        private readonly Stages stage;
 
         /// <summary>
-        /// Object that holds all information about the currentstage including objects
+        /// Object that holds all information about the current stage including objects
         /// </summary>
         /// <param name="givenStage">A stage from the Stages.cs list</param>
         /// <exception cref="Exception">When the stage from Stages.cs doesn't have the same name as the file</exception>
@@ -37,7 +40,6 @@ namespace GXPEngine
             LoadStage();
 
         }
-
         void Update()
         {
             SortDisplayHierarchy();
@@ -52,10 +54,9 @@ namespace GXPEngine
             stageHeight = stageData.Height * stageData.TileHeight;
             
             Layer mainLayer = stageData.Layers[0];
-
-            short[,] tileNumbers;
-
-            tileNumbers = mainLayer.GetTileArray();
+            
+            short [,] tileNumbers = mainLayer.GetTileArray();
+            
             for (int col = 0; col < mainLayer.Width; col++)
             for (int row = 0; row < mainLayer.Height; row++)
             {
@@ -76,13 +77,11 @@ namespace GXPEngine
                         myGame.player = new Player();
                         myGame.player.SetXY(x,y);
                         AddChild(myGame.player);
-                        myGame.player.SetWeapon(new BurgerPunch());
                         break;
                     
                     case 25:
                         Enemy enemy = new PizzaZombie();
                         enemy.SetXY(x,y);
-                        enemy.SetTarget(myGame.player);
                         AddChild(enemy);
                         break;
                 }
@@ -104,7 +103,7 @@ namespace GXPEngine
         }
         
         /// <summary>
-        /// Sorts the displayhierarchy to make sure objects are layered correctly.
+        /// Sorts the display hierarchy to make sure objects are layered correctly.
         /// </summary>
         private void SortDisplayHierarchy()
         {
@@ -131,9 +130,9 @@ namespace GXPEngine
             List<Entity> entities = new List<Entity>();
             foreach (GameObject gameObject in GetChildren())
             {
-                if (gameObject is Entity)
+                if (gameObject is Entity entity)
                 {
-                    entities.Add((Entity)gameObject);
+                    entities.Add(entity);
                 }    
             }
             return entities;
@@ -143,11 +142,12 @@ namespace GXPEngine
         public List<Enemy> GetEnemies()
         {
             List<Enemy> enemies = new List<Enemy>();
-            foreach (GameObject gameObject in GetEntities())
+            
+            foreach (Entity entity in GetEntities())
             {
-                if (gameObject is Enemy)
+                if (entity is Enemy enemy)
                 {
-                    enemies.Add((Enemy)gameObject);
+                    enemies.Add(enemy);
                 }
             }
             return enemies;

@@ -1,39 +1,44 @@
-﻿
-using System;
-using System.Threading;
+﻿using System;
+using System.Linq.Expressions;
+using GXPEngine.Abilities;
 using GXPEngine.Core;
 
-namespace GXPEngine
+namespace GXPEngine.Entities
 {
     /// <summary>
     /// Class that covers all types of entities (players and enemies)
     /// </summary>
     public class Entity : Sprite
     {
-        public Weapon weapon;
+        //Abilities
+        public Ability mainAbility { get; protected set; }
+        public Ability specialAbility { get; protected set; }
 
         //STATS
-        public float health;
-        public float damage;
-
+        public float health { get; protected set; }
+        public float speed { get; protected set; }
+        
         //Invincibility duration after being hit
         private int damageTime;
         protected int invincibilityDuration;
         private bool damageable;
+        
+        //Model Information
+        public int modelColumns { get; private set; }
+        public int modelRows { get; private set; }
 
 
-        public bool FeetHitBoxIsVisible = false;
+        public bool feetHitBoxIsVisible = false;
         
         protected Vector2 velocity;
-        protected float speed;
         protected State currentState;
         
-        public AnimationSprite model;  //changed to protected to test it out in tempEnemy
-        protected EasyDraw canvas;      //changed to protected to test it out in tempEnemy
+        public AnimationSprite model { get; private set; } 
+        protected EasyDraw canvas;      
 
         public Sprite bodyHitbox;
 
-        public String tag;
+        public string entityType { get; protected set;}
         
 
 
@@ -46,43 +51,79 @@ namespace GXPEngine
         /// <param name="modelPath">Filepath of the image used for the entity's model</param>
         /// <param name="columns">The amount of columns the spritesheet has</param>
         /// <param name="rows">The amount of rows the spritesheet has</param>
-        protected Entity(string hitboxPath, string modelPath, int columns, int rows) : base(hitboxPath)  //feet HitBox are the base for animationSprite, that means that the base needs to be in the correct size so that the animationsprite fits
+        protected Entity(string hitboxPath) : base(hitboxPath)  //feet HitBox are the base for animationSprite, that means that the base needs to be in the correct size so that the animationSprite fits
         {
             damageable = true;
-            
-            //Model of the entity
-            model = new AnimationSprite(modelPath, columns, rows, addCollider:false);
-            model.SetXY(x-32,-model.height+height);                               
-            AddChild(model);
 
             //Canvas for debug purposes
-            canvas = new EasyDraw(width, height, false);             
-            AddChildAt(canvas,0);
+            canvas = new EasyDraw(width, height, false)
+            {
+                parent = this
+            };             
+        }
+        
+        public void UseMainAbility()
+        {
+            if (mainAbility == null)
+            {
+                throw new Exception(this + " doesn't have a main ability! Please set one using SetMainAbility()");
+            }
+            mainAbility.Use();
         }
 
-        /// <summary>
-        /// Sets the weapon of the entity
-        /// </summary>
-        public void SetWeapon(Weapon newWeapon)
+        public void UseSpecialAbility()
         {
-            weapon = newWeapon;
-            AddChild(weapon);
+            if (specialAbility == null)
+            {
+                throw new Exception(this + " doesn't have a special ability! Please set one using SetMainAbility()");
+            }
+
+            specialAbility.Use();
         }
+        
+        protected void SetMainAbility(Ability newAbility)
+        {
+            mainAbility = newAbility;
+            AddChild(mainAbility);
+        }
+        protected void SetSpecialAbility(Ability newAbility)
+        {
+            specialAbility = newAbility;
+            AddChild(specialAbility);
+        }
+
+        
+
+        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0)
+        {
+            model = new AnimationSprite(modelPath, columns, rows, addCollider: false);
+            model.SetXY(x,y);
+
+            modelColumns = columns;
+            modelRows = rows;
+            
+            
+            AddChild(model);
+        }
+        
+        
         
         /// <summary>
         /// Sets the hitbox of the body
         /// </summary>
         /// <param name="path">The filepath for the image used</param>
-        /// <param name="x">The x coordinate of the location of the hitbox</param>
-        /// <param name="y">The y coordinate of the location of the hitbox</param>
-        protected void SetBodyHitbox(string path, float x, float y)
+        /// <param name="newX">The x coordinate of the location of the hitbox</param>
+        /// <param name="newY">The y coordinate of the location of the hitbox</param>
+        protected void SetBodyHitbox(string path, float newX, float newY)
         {
-            bodyHitbox = new Sprite(path);
-            bodyHitbox.alpha = 150;
-            bodyHitbox.collider.isTrigger = true;
-            bodyHitbox.x = x;
-            bodyHitbox.y = y;
-            AddChild(bodyHitbox);
+            bodyHitbox = new Sprite(path)
+            {
+                alpha = 170,
+                collider = {isTrigger = true},
+                x = newX,
+                y = newY,
+                parent = this
+            };
         }
         
         /// <summary>
@@ -104,7 +145,6 @@ namespace GXPEngine
                 
                 model.SetColor(0,255,0);
                 Console.WriteLine(model.name + ", " + "Health: " + health);
-
             }
         }
 
@@ -130,6 +170,11 @@ namespace GXPEngine
         /// </summary>
         protected virtual void Update()
         {
+            if (model == null)
+            {
+                throw new Exception(this.name + " is lacking a model! Assign one using SetModel()");
+            }
+            
             model.Animate(Time.deltaTime);
             UpdateState();
 
@@ -178,7 +223,7 @@ namespace GXPEngine
         /// </summary>
         protected virtual void UpdateMovement()
         {
-            //seperate MoveUntilCollision into x and y so that the player doesn't get stuck in a wall when moving diagonally (Game Programming Recording 2: 1:16:56)
+            //Separate MoveUntilCollision into x and y so that the player doesn't get stuck in a wall when moving diagonally (Game Programming Recording 2: 1:16:56)
             MoveUntilCollision(0, velocity.y * Time.deltaTime * speed);
             MoveUntilCollision(velocity.x * Time.deltaTime * speed, 0);
             
@@ -188,9 +233,9 @@ namespace GXPEngine
             Mirror(mirror,false);
             model.Mirror(mirror,false);
 
-            if (weapon != null)
+            if (mainAbility != null)
             {
-                weapon.Mirror(mirror,false);
+                mainAbility.Mirror(mirror,false);
             }
             
             
@@ -204,8 +249,7 @@ namespace GXPEngine
         protected enum State
         {
             Walk,
-            Stand,
-            Jump
+            Stand
         }
         
         /// <summary>
@@ -226,7 +270,7 @@ namespace GXPEngine
         }
         
         /// <summary>
-        /// Updates the animationcycle based on the currentState
+        /// Updates the AnimationCycle based on the currentState
         /// </summary>
         private void UpdateAnimation()
         {
@@ -237,9 +281,6 @@ namespace GXPEngine
                     break;
                 case State.Walk:
                     model.SetCycle(1,3);
-                    break;
-                case State.Jump:
-                    model.SetCycle(4,1);
                     break;
             }
         }

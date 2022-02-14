@@ -38,10 +38,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Barrier.cs" />
-    <Compile Include="Entity.cs" />
+    <Compile Include="Entities\Characters.cs" />
+    <Compile Include="Entities\Enemy.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Player.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
+    <Compile Include="Hud.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -80,12 +84,10 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Stage.cs" />
-    <Compile Include="StageLoader.cs" />
-    <Compile Include="Stages.cs" />
-    <Compile Include="Temp.cs" />
-    <Compile Include="Enemy.cs" />
-    <Compile Include="Weapon.cs" />
+    <Compile Include="StageManagement\Stage.cs" />
+    <Compile Include="StageManagement\StageLoader.cs" />
+    <Compile Include="StageManagement\Stages.cs" />
+    <Compile Include="Abilities\BasicMelee.cs" />
+    <Compile Include="Abilities\Ability.cs" />
   </ItemGroup>
 </Project>

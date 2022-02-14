@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using GXPEngine.Entities;
 
-namespace GXPEngine
+namespace GXPEngine.StageManagement
 {
     /// <summary>
-    /// Static class that handles accessing of the currentstage and its children
+    /// Static class that handles accessing of the current stage and its children
     /// </summary>
     public static class StageLoader
     {

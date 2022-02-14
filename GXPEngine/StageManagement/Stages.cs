@@ -1,4 +1,4 @@
-﻿namespace GXPEngine
+﻿namespace GXPEngine.StageManagement
 {
     /// <summary>
     /// List of all the stages as enums, used for the loading of stages.
