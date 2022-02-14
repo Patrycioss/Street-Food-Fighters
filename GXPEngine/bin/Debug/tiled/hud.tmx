@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="22" height="13" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="6">
+ <tileset firstgid="1" name="colors" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="../../../../../../../../../1.2/Programming/GXPENGINE/GXPEngine_1_2_personalTry/GXPEngine/bin/Debug/colors.png" width="64" height="64"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="22" height="13">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="Objects">
+  <object id="1" name="hearts" type="hearts" gid="1" x="192" y="64" width="64" height="64"/>
+  <object id="2" name="&quot;Score&quot;" x="1090.5" y="18.8644" width="180.171" height="41.2439">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Score: </text>
+  </object>
+  <object id="3" type="scorePoints" x="1236.66" y="18.8644" width="180.171" height="41.2439">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">0</text>
+  </object>
+ </objectgroup>
+</map>

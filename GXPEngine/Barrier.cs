@@ -7,19 +7,18 @@
         /// <summary>
         /// Object that functions as an invisible barrier for entities
         /// </summary>
-        public Barrier() : base("barrier.png", addCollider: true)
+        public Barrier() : base("hitboxes/barrier.png", addCollider: true)
         {
-            canvas = new EasyDraw(width, height);
-            AddChild(canvas);
+            visible = false;
         }
 
         void Update()
         {
-            if (debugMode)
-            {
-                canvas.Clear(255,0,0, 50);
-            }
-            else canvas.ClearTransparent();
+        }
+
+        void Debug()
+        {
+            visible = !visible;
         }
     }
 }
