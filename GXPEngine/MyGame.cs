@@ -8,7 +8,9 @@ namespace GXPEngine
 	{
 		public Player player;
 		private Hud hud;
-	
+
+
+
 		private MyGame() : base(1366, 768, false)
 		{
 			//4 x 64 =  256 

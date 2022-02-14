@@ -18,7 +18,7 @@ namespace GXPEngine.Entities
         protected Enemy(string feetPath) : base(feetPath)
         {
             //Invincibility duration for all enemies (can be overriden individually)
-            invincibilityDuration = 2000;
+            invincibilityDuration = 0;
 
             entityType = "enemy";
         

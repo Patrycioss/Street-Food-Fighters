@@ -57,6 +57,11 @@ namespace GXPEngine.Entities
                 UseMainAbility();
             }
 
+            if (Input.GetKey(Key.G))
+            {
+                UseSpecialAbility();
+            }
+
             if (Time.now - timeAtSwap > triggerDelay && Input.GetKey(Key.S))
             {
                 SwapCharacters();
@@ -64,7 +69,7 @@ namespace GXPEngine.Entities
             }
             
 
-            velocity.Add(GetKeyInputs());
+            velocity.Add(GetMovementInputs());
             
             base.Update();
             //System.Console.WriteLine("AnimationSprite x: {0}, y: {1} \n Feet x: {2}, y: {3}", model.x, model.y, canvas.x, canvas.y);
@@ -91,7 +96,7 @@ namespace GXPEngine.Entities
         }
 
         /// <returns>A directional vector with information from arrow keys pressed by the player.</returns>
-        private Vector2 GetKeyInputs()
+        private Vector2 GetMovementInputs()
         {
             Vector2 vector2 = new Vector2(0, 0);
 
@@ -136,6 +141,7 @@ namespace GXPEngine.Entities
                 model.Destroy();
                 SetModel(newCharacter.model.name, newCharacter.modelColumns,newCharacter.modelRows, currentCharacter.model.x,currentCharacter.model.y);
                 SetMainAbility(newCharacter.mainAbility);
+                SetSpecialAbility(newCharacter.specialAbility);
                 
             }
             else Console.WriteLine("The new character is the same as the old one!");
