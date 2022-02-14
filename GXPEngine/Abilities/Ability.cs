@@ -18,8 +18,14 @@ namespace GXPEngine.Abilities
         //x-coordinates that are used to ensure the position being correct with mirroring
         protected Vector2 xCoordinates;
 
-
+        //List of entities that were already hit by the ability
         protected List<Entity> entitiesHit;
+        
+        //Stuff that determines whether and for how long the attack is happening
+        protected int attackDuration;
+        protected int timeAtAttack;
+        protected bool attacking;
+
 
 
         /// <summary>
@@ -38,6 +44,14 @@ namespace GXPEngine.Abilities
         {
             if (Time.now - timeAtUse > coolDown) usable = true;
             x = mirrorX ? xCoordinates.x : xCoordinates.y;
+            
+            //Timer for the duration of the punch
+            if (Time.now - timeAtAttack > attackDuration)
+            {
+                attacking = false;
+                visible = false;
+                entitiesHit.Clear();
+            }
         }
 
         /// <summary>
@@ -45,20 +59,25 @@ namespace GXPEngine.Abilities
         /// </summary>
         public void Use()
         {
-            
             if (usable)
             {
+                if (!attacking)
+                {
+                    visible = true;
+                    attacking = true;
+                    timeAtAttack = Time.now;
+                }
+                
                 Action();
                 timeAtUse = Time.now;
                 usable = false;
             }
         }
-    
 
         /// <summary>
-        /// Executes the appropriate action for the weapon
+        /// Action that can be overridden in subclasses to allow for one time happening actions
         /// </summary>
-        protected virtual void Action(){}
+        protected virtual void Action() {}
     }
 }
 

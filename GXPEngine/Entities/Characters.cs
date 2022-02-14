@@ -16,7 +16,7 @@ namespace GXPEngine.Entities
          speed = 0.5f;
 
          SetMainAbility(new BurgerPunch());
-         SetSpecialAbility(new BurgerPunch());
+         SetSpecialAbility(new BurgerExplosion());
 
          SetAnimationDelay(170);
       }
@@ -32,6 +32,7 @@ namespace GXPEngine.Entities
          speed = 0.5f;
 
          SetMainAbility(new PastaWhip());
+         SetSpecialAbility(new MeatBallShooter());
          
          SetAnimationDelay(170);
       }
