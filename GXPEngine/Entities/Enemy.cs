@@ -5,17 +5,11 @@ namespace GXPEngine.Entities
 {
     public class Enemy : Entity
     {
-        public int detectionRadius;
-        protected int attackRadius;
+        public int attackRadius { get; protected set; }
     
         private GameObject target;              //setting to player in game (later change it to level)
-        private Sprite vision;                  //show rotation from enemy to player
         private Vector2 direction;              //moving direction
 
-
-        private int timeAtRandomize;
-        private int randomizeCooldown;
-    
         /// <summary>
         /// A temporary class for an enemy that tracks the player, will later most likely function as a base class for enemies.
         /// </summary>
@@ -28,20 +22,6 @@ namespace GXPEngine.Entities
         
             collider.isTrigger = false;
             speed = 0.1f;
-
-            randomizeCooldown = 1000;
-            timeAtRandomize = Time.now;
-            
-            
-            
-            vision = new Sprite("placeholders/colors.png", addCollider: false);
-
-            // without this the vision is set from the upper left corner of the feet Hit box (better for making the enemy move to the player's y axis?)
-            // vision.SetXY(x + width / 2, -model.height / 2 + canvas.height); //canvas.height :feet hit box, height: entire entity including model height + canvas height
-            // vision.SetScaleXY(1, 0.1f);
-            // AddChild(vision);
-
-            //SetScaleXY(1, 2);        
         }
 
         /// <summary>
@@ -56,6 +36,9 @@ namespace GXPEngine.Entities
     
         protected override void Update()
         {
+            ChangeMirrorStatus();
+            FixMirroring();
+            
             if (target != null)
             {
                 if (DistanceTo(target) >= attackRadius)
@@ -65,23 +48,16 @@ namespace GXPEngine.Entities
                     direction = targetPosition - new Vector2(x, y);
                     direction.Normalize();
                     velocity = direction;
-            
-                    //Calculates the angle at which the enemy is tracking the player and visually updates it
-                    float angle = Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI;
-                    vision.rotation = angle;
-                }
-
-                // if (Time.now - randomizeCooldown > timeAtRandomize)
-                // {
-                //     velocity.x *= Utils.Random(-1.5f,1.5f);
-                //     velocity.y *= Utils.Random(-1.5f, 1.5f);
-                //     timeAtRandomize = Time.now;
-                // }
-            
+                } 
             }
             else Console.WriteLine("Assign a target to enemy: " + this);
         
             base.Update();
+        }
+
+        protected override void ChangeMirrorStatus()
+        {
+            mirrored = (target.x < x);
         }
 
         protected override void Kill()

@@ -1,17 +1,15 @@
-﻿using System.Threading;
-using GXPEngine.Core;
-using GXPEngine.Entities;
+﻿using GXPEngine.Entities;
 using GXPEngine.StageManagement;
 
 namespace GXPEngine.Abilities
 {
-    public class Projectile : AnimationSprite
+    public class Meatball : AnimationSprite
     {
         private float speed;
         private float damage;
         private Entity actualParent;
         
-        public Projectile(float setSpeed, float setDamage, GameObject parent) : base("hitboxes/meat_ball.png", 1, 1)
+        public Meatball(float setSpeed, float setDamage, GameObject parent) : base("hitboxes/meat_ball.png", 1, 1)
         {
             collider.isTrigger = false;
             speed = setSpeed;

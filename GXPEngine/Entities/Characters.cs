@@ -35,7 +35,7 @@ namespace GXPEngine.Entities
          SetSpecialAbility(new MeatballShooter());
          
          SetAnimationDelay(170);
-      }
+      }  
    }
 
    public class PizzaZombie : Enemy
@@ -53,7 +53,6 @@ namespace GXPEngine.Entities
          speed = 0.2f;
             
          attackRadius = 100;
-         detectionRadius = 100;
       }
    }
 
@@ -66,13 +65,12 @@ namespace GXPEngine.Entities
          
          SetTarget(myGame.player);
          
-         SetMainAbility(new BurgerPunch());
+         SetMainAbility(new SeedShooter());
          
          health = 2.0f;
          speed = 0.2f;
 
          attackRadius = 500;
-         detectionRadius = 100;
       }
    }
 

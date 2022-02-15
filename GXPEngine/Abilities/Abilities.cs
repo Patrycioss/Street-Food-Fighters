@@ -59,19 +59,61 @@ namespace GXPEngine.Abilities
         }
     }
     
-    public class SeedShooter : ProjectileShooter
+    public class SeedShooter : Ability
     {
-        public SeedShooter()
+        private float speed;
+        public SeedShooter() : base("hitboxes/seed.png",1,1)
         {
-         
+            damage = 1;
+            speed = 1;
+            xCoordinates = new Vector2(0, width);
+            y = -0.75f * height;
+            coolDown = 500;
+            
+            
+        
         }
-    }
 
-    public class MeatballShooter : ProjectileShooter
-    {
-        public MeatballShooter()
+        protected override void Action()
         {
+            Vector2 playerPos = InverseTransformPoint(myGame.player.x, myGame.player.y);
+
+            Vector2 direction = playerPos - new Vector2(parent.parent.x, parent.parent.y);
+            
+            direction.Normalize();
+            Console.WriteLine(direction);
+
+            Seed seed = new Seed(direction,speed,damage, parent);
+     
+            Vector2 vector2 = TransformPoint(parent.parent.x + xCoordinates.x, parent.parent.y + y);
+            seed.SetXY(vector2.x,vector2.y);
+            StageLoader.AddObject(seed);
+        }
+        
+        
+    }   
+
+    public class MeatballShooter : Ability
+    {
+        private float speed;
+        public MeatballShooter() : base("hitboxes/meat_ball.png",1,1)
+        {
+            damage = 3;
+            speed = 1;
+            xCoordinates = new Vector2(0, width);
+            y = -0.75f * height;
+            coolDown = 500;
          
         }
+        
+        protected override void Action()                                                                
+        {                                                                                               
+            Meatball meatball = new Meatball(mirrorX?-speed:speed,damage, parent);                      
+                                                                                                 
+            Vector2 vector2 = TransformPoint(parent.parent.x + xCoordinates.x, parent.parent.y + y);    
+            meatball.SetXY(vector2.x,vector2.y);                                                        
+            StageLoader.AddObject(meatball);                                                            
+        }                                                                                               
+
     }
 }

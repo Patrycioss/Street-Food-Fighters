@@ -6,7 +6,7 @@ namespace GXPEngine.Entities
 {
     public class Player : Entity
     {
-        public int chargedAmount { get; protected set; }
+        public int chargedAmount { get; private set; }
         private int necessaryCharge;
         private bool canUseSpecial;
         
@@ -120,7 +120,7 @@ namespace GXPEngine.Entities
             {
                 if (enemy.mainAbility != null)
                 {
-                    if (DistanceTo(enemy) <= enemy.detectionRadius)
+                    if (DistanceTo(enemy) <= enemy.attackRadius)
                     {
                         enemy.mainAbility.Use();
                     }
