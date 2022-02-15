@@ -64,7 +64,7 @@ namespace GXPEngine
             {
                 if (hearts[i] == null)
                 {
-                    hearts[i] = new Sprite("placeholders/colors.png", addCollider: false);
+                    hearts[i] = new Sprite("models/heart.png", addCollider: false);
                     hearts[i].SetXY(healthPos.x + (64 * i), healthPos.y - 64);     
                     canvas.AddChild(hearts[i]);
                     Console.WriteLine(hearts.Length);
@@ -73,17 +73,24 @@ namespace GXPEngine
         }
 
         //called in Entity.Damage(), only applies to Player
-        public void RemoveHeart()
+        public void RemoveHearts(int amount)
         {
-            for (int i = hearts.Length -1; i >= 0; i--) 
+            for (int t = 0; t < amount; t++)
             {
-                if (hearts[i] != null)
+                if (hearts.Length != 0)
                 {
-                    hearts[i].LateDestroy();
-                    hearts[i] = null;
-                    break;                          
+                    for (int i = hearts.Length -1; i >= 0; i--) 
+                    {
+                        if (hearts[i] != null)
+                        {
+                            hearts[i].LateDestroy();
+                            break;                          
+                        }
+                    }
                 }
             }
+            
+            
             UpdateCanvas();
         }
 

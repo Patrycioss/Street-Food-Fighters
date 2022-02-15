@@ -60,12 +60,12 @@ namespace GXPEngine.Entities
                 timeAtTrigger = Time.now;
             }
 
-            if (Input.GetKey(Key.F))
+            if (Input.GetKeyUp(Key.F))
             {
                 UseMainAbility();
             }
 
-            if (Input.GetKey(Key.G) && canUseSpecial)
+            if (Input.GetKeyUp(Key.G) && canUseSpecial)
             {
                 UseSpecialAbility();
                 canUseSpecial = false;
@@ -98,6 +98,12 @@ namespace GXPEngine.Entities
             chargedAmount += amount;
         }
 
+        public override void Damage(float amount)
+        {
+            base.Damage(amount);
+            myGame.hud.RemoveHearts((int)amount);
+        }
+     
         protected override void ChangeMirrorStatus()
         {
             if (Input.GetKey(Key.LEFT))
@@ -154,6 +160,9 @@ namespace GXPEngine.Entities
             return vector2;
         }
 
+        /// <summary>
+        /// Swaps between the two playable characters
+        /// </summary>
         private void SwapCharacters()
         {
             if (currentCharacter == burgerWoman)
@@ -166,16 +175,28 @@ namespace GXPEngine.Entities
             }
         }
 
+        /// <summary>
+        /// Sets the current character
+        /// </summary>
         private void SetCurrentCharacter(Entity newCharacter)
         {
             if (currentCharacter != newCharacter)
             {
+                currentCharacter = null;
                 currentCharacter = newCharacter;
                 model.Remove();
-                SetModel(newCharacter.model.name, newCharacter.modelColumns,newCharacter.modelRows, currentCharacter.model.x,currentCharacter.model.y);
+                SetModel(newCharacter.model.name, newCharacter.modelColumns,newCharacter.modelRows, currentCharacter.model.x,currentCharacter.model.y, newCharacter.unusedPixels);
                 SetMainAbility(newCharacter.mainAbility);
                 SetSpecialAbility(newCharacter.specialAbility);
                 
+                walkAnimationDelay = newCharacter.walkAnimationDelay;
+                idleAnimationDelay = newCharacter.idleAnimationDelay;
+                specialAnimationDelay = newCharacter.specialAnimationDelay;
+                basicAnimationDelay = newCharacter.basicAnimationDelay;
+
+                currentState = newCharacter.currentState;
+                unusedPixels = newCharacter.unusedPixels;
+
             }
             else Console.WriteLine("The new character is the same as the old one!");
         }

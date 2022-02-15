@@ -10,37 +10,58 @@ namespace GXPEngine.Entities
     /// </summary>
     public class Entity : Sprite
     {
+        
+        public State currentState;
+        public string entityType { get; protected set;}
+        
+        protected Vector2 velocity;
+        public int unusedPixels { get; protected set; }
+
+        
         //Abilities
         public Ability mainAbility { get; protected set; }
         public Ability specialAbility { get; protected set; }
 
+        private bool abilityCanBeUsed;
+        private bool usingAbility;
+
+        protected int abilityCooldown;
+        private int abilityDuration;
+        private int abilityUseTime;
+
+        public byte specialAnimationDelay { get; protected set; }
+        public byte basicAnimationDelay { get; protected set; }
+
         //STATS
         public float health { get; protected set; }
         public float speed { get; protected set; }
-        
+
         //Invincibility duration after being hit
         private int damageTime;
         protected int invincibilityDuration;
         private bool damageable;
-        
+
         //Model Information
+        public AnimationSprite model { get; private set; }
+
         public int modelColumns { get; private set; }
         public int modelRows { get; private set; }
 
-        protected bool mirrored;
+        public bool mirrored { get; protected set; }
+
+        public byte walkAnimationDelay { get; protected set; }
+        public byte idleAnimationDelay { get; protected set; }
+
+        protected Vector2 xVectorModel;
+
+        //Feet
+        protected Vector2 xVectorFeet;
+        protected EasyDraw canvas;
+
+        //Body
+        public Sprite bodyHitbox { get; protected set; }
+
         
-        protected Vector2 velocity;
-        protected State currentState;
-        
-        public AnimationSprite model { get; private set; } 
-        protected EasyDraw canvas;      
-
-        public Sprite bodyHitbox;
-
-        public string entityType { get; protected set;}
-        
-
-
         /// <summary>
         /// All enemies and players are entities, all entities can move, are animated and have hitboxes.
         /// The sprite of this object functions as the hitbox for the feet of the entity, this hitbox is thus
@@ -58,25 +79,56 @@ namespace GXPEngine.Entities
             canvas = new EasyDraw(width, height, false);      
             canvas.Fill(255,0,0);
             canvas.visible = false;
+            AddChild(canvas);
+
+            usingAbility = false;
+            abilityCanBeUsed = true;
+
+            abilityCooldown = 5000;
         }
         
         public void UseMainAbility()
         {
-            if (mainAbility == null)
+            if (abilityCanBeUsed)
             {
-                throw new Exception(this + " doesn't have a main ability! Please set one using SetMainAbility()");
+                abilityCanBeUsed = false;
+
+                if (mainAbility == null)
+                {
+                    throw new Exception(this + " doesn't have a main ability! Please set one using SetMainAbility()");
+                }
+
+
+                currentState = State.MainAttack;
+
+                abilityDuration = basicAnimationDelay * (model.frameCount + 2);
+                abilityUseTime = Time.now;
+
+                usingAbility = true;
+                
+                mainAbility.Use();
             }
-            mainAbility.Use();
         }
 
         public void UseSpecialAbility()
         {
-            if (specialAbility == null)
+            if (!usingAbility)
             {
-                throw new Exception(this + " doesn't have a special ability! Please set one using SetMainAbility()");
-            }
+                if (specialAbility == null)
+                {
+                    throw new Exception(this + " doesn't have a special ability! Please set one using SetMainAbility()");
+                }
 
-            specialAbility.Use();
+                specialAbility.Use();
+
+                currentState = State.SpecialAttack;
+
+                abilityDuration = specialAnimationDelay * (model.frameCount + 2);
+                abilityUseTime = Time.now;
+
+                usingAbility = true;
+                
+            }
         }
         
         protected void SetMainAbility(Ability newAbility)
@@ -92,10 +144,16 @@ namespace GXPEngine.Entities
 
         
 
-        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0)
+        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0, int unusedPixels = 0)
         {
             model = new AnimationSprite(modelPath, columns, rows, addCollider: false);
+
             model.SetXY(x,y);
+            
+            xVectorModel = new Vector2(model.x - unusedPixels, model.x);
+            
+            
+            
 
             modelColumns = columns;
             modelRows = rows;
@@ -104,6 +162,7 @@ namespace GXPEngine.Entities
             AddChild(model);
             model.AddChild(canvas);
 
+            xVectorFeet = InverseTransformPoint(xVectorModel.x, xVectorModel.y);
             Vector2 canvasPos = model.InverseTransformPoint(this.x, this.y);
             canvas.SetXY(canvasPos.x,canvasPos.y);
         }
@@ -131,7 +190,7 @@ namespace GXPEngine.Entities
         /// <summary>
         /// Damages the entity for a certain amount of damage. 
         /// </summary>
-        public void Damage(float amount)
+        public virtual void Damage(float amount)
         {
             if (damageable)
             {
@@ -172,6 +231,23 @@ namespace GXPEngine.Entities
         /// </summary>
         protected virtual void Update()
         {
+            if (usingAbility)
+            {
+                if (Time.now - abilityUseTime > abilityDuration)
+                {
+                    usingAbility = false;
+                }
+            }
+
+            if (!abilityCanBeUsed)
+            {
+                if (Time.now - abilityUseTime > abilityCooldown)
+                {
+                    abilityCanBeUsed = true;
+                }
+            }
+            
+            
             if (debugMode)
             {
                 bodyHitbox.visible = true;
@@ -193,7 +269,10 @@ namespace GXPEngine.Entities
             UpdateState();
 
             //Updates movement and fixes mirror
-            if (velocity != new Vector2(0, 0)) UpdateMovement();
+            if (velocity != new Vector2(0, 0) && !usingAbility)
+            {
+                UpdateMovement();
+            } else velocity.Set(0,0);
             
             
             //Debugging
@@ -219,18 +298,10 @@ namespace GXPEngine.Entities
             {
                 model.alpha = Utils.Random(60, 100);
             }
+            
+            UpdateAnimation();
         }
-
-
-
-        /// <summary>
-        /// Sets the delay between animation frames, can be set individually for entities to ensure nice animations
-        /// </summary>
-        /// <param name="delay">The amount of delay between animation frames, can range from 0-255</param>
-        protected void SetAnimationDelay(byte delay)
-        {
-            model.SetCycle(1,model.frameCount,delay);
-        }
+        
 
         /// <summary>
         /// Updates the entities movement based on its speed and Time.deltaTime
@@ -249,16 +320,27 @@ namespace GXPEngine.Entities
             velocity.Set(0,0);
         }
 
+        /// <summary>
+        /// Changes the status of the mirrored bool, can be overridden to ensure proper mirroring
+        /// </summary>
         protected virtual void ChangeMirrorStatus()
         {
             mirrored = (velocity.x < 0);
         }
 
+        /// <summary>
+        /// Fixes the mirroring
+        /// </summary>
         protected void FixMirroring()
         {
+            model.Mirror(mirrored,false);
+
+            model.x = mirrored ? xVectorModel.x : xVectorModel.y;
+            canvas.x = mirrored ? xVectorFeet.x : xVectorFeet.y;
+            
+            canvas.Mirror(mirrored,false);
             
             Mirror(mirrored,false);
-            model.Mirror(mirrored,false);
 
             if (mainAbility != null)
             {
@@ -275,10 +357,12 @@ namespace GXPEngine.Entities
         /// <summary>
         /// Enum that determines in what state the entity is
         /// </summary>
-        protected enum State
+        public enum State
         {
             Walk,
-            Stand
+            Stand,
+            MainAttack,
+            SpecialAttack
         }
         
         /// <summary>
@@ -286,15 +370,16 @@ namespace GXPEngine.Entities
         /// </summary>
         private void UpdateState()
         {
-            if (velocity.Magnitude() == 0)
+            if (!usingAbility)
             {
-                currentState = State.Stand;
-                UpdateAnimation();
-            }
-            else if (currentState != State.Walk)
-            {
-                currentState = State.Walk;
-                UpdateAnimation();
+                if (velocity.Magnitude() == 0)
+                {
+                    currentState = State.Stand;
+                }
+                else if (currentState != State.Walk)
+                {
+                    currentState = State.Walk;
+                }
             }
         }
         
@@ -306,10 +391,16 @@ namespace GXPEngine.Entities
             switch (currentState)
             {
                 case State.Stand:
-                    model.SetCycle(5,3);
+                    model.SetCycle(25,5, idleAnimationDelay);
                     break;
                 case State.Walk:
-                    model.SetCycle(1,3);
+                    model.SetCycle(0,25, walkAnimationDelay);
+                    break;
+                case State.MainAttack:
+                    model.SetCycle(43,55,basicAnimationDelay);
+                    break;
+                case State.SpecialAttack:
+                    model.SetCycle(30,42,specialAnimationDelay);
                     break;
             }
         }

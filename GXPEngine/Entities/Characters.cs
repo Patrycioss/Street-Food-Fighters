@@ -18,7 +18,14 @@ namespace GXPEngine.Entities
          SetMainAbility(new BurgerPunch());
          SetSpecialAbility(new BurgerExplosion());
 
-         SetAnimationDelay(170);
+         idleAnimationDelay = 200;
+         walkAnimationDelay = 200;
+
+         specialAnimationDelay = 200;
+         basicAnimationDelay = 200;
+
+         unusedPixels = 0;
+
       }
    }
 
@@ -26,15 +33,24 @@ namespace GXPEngine.Entities
    {
       public PastaMan() : base("hitboxes/pasta_man.png")
       {
-         SetModel("models/pasta_man.png",1,1,-40,-110);
+         SetModel("models/pasta_man.png",56,1,-40,-110);
          SetBodyHitbox("hitboxes/pasta_man.png", -25, -model.height*0.8f);
          health = 3.0f;
          speed = 0.5f;
 
          SetMainAbility(new PastaWhip());
          SetSpecialAbility(new MeatballShooter());
+
+         unusedPixels = 256;
+
+         idleAnimationDelay = 100;
+         walkAnimationDelay = 40;
+
+         basicAnimationDelay = 120;
+         specialAnimationDelay = 100;
          
-         SetAnimationDelay(170);
+         
+         
       }  
    }
 
