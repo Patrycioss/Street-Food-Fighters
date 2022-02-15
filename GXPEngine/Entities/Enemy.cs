@@ -11,6 +11,10 @@ namespace GXPEngine.Entities
         private GameObject target;              //setting to player in game (later change it to level)
         private Sprite vision;                  //show rotation from enemy to player
         private Vector2 direction;              //moving direction
+
+
+        private int timeAtRandomize;
+        private int randomizeCooldown;
     
         /// <summary>
         /// A temporary class for an enemy that tracks the player, will later most likely function as a base class for enemies.
@@ -24,6 +28,10 @@ namespace GXPEngine.Entities
         
             collider.isTrigger = false;
             speed = 0.1f;
+
+            randomizeCooldown = 1000;
+            timeAtRandomize = Time.now;
+            
             
             
             vision = new Sprite("placeholders/colors.png", addCollider: false);
@@ -62,11 +70,24 @@ namespace GXPEngine.Entities
                     float angle = Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI;
                     vision.rotation = angle;
                 }
+
+                // if (Time.now - randomizeCooldown > timeAtRandomize)
+                // {
+                //     velocity.x *= Utils.Random(-1.5f,1.5f);
+                //     velocity.y *= Utils.Random(-1.5f, 1.5f);
+                //     timeAtRandomize = Time.now;
+                // }
             
             }
             else Console.WriteLine("Assign a target to enemy: " + this);
         
             base.Update();
+        }
+
+        protected override void Kill()
+        {
+            myGame.player.AddCharge(1);
+            base.Kill();
         }
 
     }

@@ -6,6 +6,10 @@ namespace GXPEngine.Entities
 {
     public class Player : Entity
     {
+        public int chargedAmount { get; protected set; }
+        private int necessaryCharge;
+        private bool canUseSpecial;
+        
         private int timeAtTrigger;
         private int triggerDelay;
 
@@ -42,6 +46,10 @@ namespace GXPEngine.Entities
             entityType = "player";
             invincibilityDuration = 5000;
             triggerDelay = 2000;
+
+            canUseSpecial = true;
+            necessaryCharge = 5;
+            chargedAmount = 0;
         }
 
         protected override void Update()
@@ -57,12 +65,19 @@ namespace GXPEngine.Entities
                 UseMainAbility();
             }
 
-            if (Input.GetKey(Key.G))
+            if (Input.GetKey(Key.G) && canUseSpecial)
             {
                 UseSpecialAbility();
+                canUseSpecial = false;
+            }
+            
+            if (chargedAmount >= necessaryCharge)
+            {
+                chargedAmount -= necessaryCharge;
+                canUseSpecial = true;
             }
 
-            if (Time.now - timeAtSwap > triggerDelay && Input.GetKey(Key.S))
+            if (Time.now - timeAtSwap > swapDelay && Input.GetKey(Key.S))
             {
                 SwapCharacters();
                 timeAtSwap = Time.now;            
@@ -76,6 +91,27 @@ namespace GXPEngine.Entities
         }
 
         /// <summary>
+        /// Adds a certain amount of charge to the player's special
+        /// </summary>
+        public void AddCharge(int amount)
+        {
+            chargedAmount += amount;
+        }
+
+        protected override void ChangeMirrorStatus()
+        {
+            if (Input.GetKey(Key.LEFT))
+            {
+                mirrored = true;
+            }
+            else if (Input.GetKey(Key.RIGHT))
+            {
+                mirrored = false;
+            }
+        }
+        
+        
+        /// <summary>
         /// Triggers enemies to attack when they are in range of the player
         /// </summary>
         private void TriggerEnemies()
@@ -84,12 +120,9 @@ namespace GXPEngine.Entities
             {
                 if (enemy.mainAbility != null)
                 {
-                    if (enemy.detectionRadius != null)
+                    if (DistanceTo(enemy) <= enemy.detectionRadius)
                     {
-                        if (DistanceTo(enemy) <= enemy.detectionRadius)
-                        {
-                            enemy.mainAbility.Use();
-                        }
+                        enemy.mainAbility.Use();
                     }
                 }
             }
@@ -138,7 +171,7 @@ namespace GXPEngine.Entities
             if (currentCharacter != newCharacter)
             {
                 currentCharacter = newCharacter;
-                model.Destroy();
+                model.Remove();
                 SetModel(newCharacter.model.name, newCharacter.modelColumns,newCharacter.modelRows, currentCharacter.model.x,currentCharacter.model.y);
                 SetMainAbility(newCharacter.mainAbility);
                 SetSpecialAbility(newCharacter.specialAbility);

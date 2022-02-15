@@ -38,7 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abilities\Abilities.cs" />
-    <Compile Include="Abilities\Meatball.cs" />
+    <Compile Include="Abilities\Projectile.cs" />
+    <Compile Include="Abilities\ProjectileShooter.cs" />
     <Compile Include="Barrier.cs" />
     <Compile Include="Entities\Characters.cs" />
     <Compile Include="Entities\Enemy.cs" />

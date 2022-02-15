@@ -80,9 +80,15 @@ namespace GXPEngine.StageManagement
                         break;
                     
                     case 25:
-                        Enemy enemy = new PizzaZombie();
-                        enemy.SetXY(x,y);
-                        AddChild(enemy);
+                        PizzaZombie pizzaZombie = new PizzaZombie();
+                        pizzaZombie.SetXY(x,y);
+                        AddChild(pizzaZombie);
+                        break;
+                    
+                    case 34:
+                        TomatoZombie tomatoZombie = new TomatoZombie();
+                        tomatoZombie.SetXY(x,y);
+                        AddChild(tomatoZombie);
                         break;
                 }
             }

@@ -27,8 +27,7 @@ namespace GXPEngine.Entities
         public int modelColumns { get; private set; }
         public int modelRows { get; private set; }
 
-
-        public bool feetHitBoxIsVisible = false;
+        protected bool mirrored;
         
         protected Vector2 velocity;
         protected State currentState;
@@ -56,10 +55,9 @@ namespace GXPEngine.Entities
             damageable = true;
 
             //Canvas for debug purposes
-            canvas = new EasyDraw(width, height, false)
-            {
-                parent = this
-            };             
+            canvas = new EasyDraw(width, height, false);      
+            canvas.Fill(255,0,0);
+            canvas.visible = false;
         }
         
         public void UseMainAbility()
@@ -104,6 +102,10 @@ namespace GXPEngine.Entities
             
             
             AddChild(model);
+            model.AddChild(canvas);
+
+            Vector2 canvasPos = model.InverseTransformPoint(this.x, this.y);
+            canvas.SetXY(canvasPos.x,canvasPos.y);
         }
         
         
@@ -159,7 +161,7 @@ namespace GXPEngine.Entities
         /// <summary>
         /// Kills the entity
         /// </summary>
-        public void Kill()
+        protected virtual void Kill()
         {
             this.LateDestroy();
         }
@@ -170,10 +172,22 @@ namespace GXPEngine.Entities
         /// </summary>
         protected virtual void Update()
         {
+            if (debugMode)
+            {
+                bodyHitbox.visible = true;
+                canvas.visible = true;
+            }
+            else
+            {
+                bodyHitbox.visible = false;
+                canvas.visible = false;
+            }
+            
             if (model == null)
             {
                 throw new Exception(this.name + " is lacking a model! Assign one using SetModel()");
             }
+            
             
             model.Animate(Time.deltaTime);
             UpdateState();
@@ -228,19 +242,34 @@ namespace GXPEngine.Entities
             MoveUntilCollision(velocity.x * Time.deltaTime * speed, 0);
             
             //Fixes mirroring based on the velocity
-            bool mirror = velocity.x < 0;
-
-            Mirror(mirror,false);
-            model.Mirror(mirror,false);
-
-            if (mainAbility != null)
-            {
-                mainAbility.Mirror(mirror,false);
-            }
-            
+            ChangeMirrorStatus();
+            FixMirroring();
             
             //Reset the velocity
             velocity.Set(0,0);
+        }
+
+        protected virtual void ChangeMirrorStatus()
+        {
+            mirrored = (velocity.x < 0);
+        }
+
+        protected void FixMirroring()
+        {
+            
+            Mirror(mirrored,false);
+            model.Mirror(mirrored,false);
+
+            if (mainAbility != null)
+            {
+                mainAbility.Mirror(mirrored,false);
+            }
+
+            if (specialAbility != null)
+            {
+                specialAbility.Mirror(mirrored,false);
+            }
+
         }
 
         /// <summary>

@@ -41,6 +41,11 @@ namespace GXPEngine
 					gameObject.debugMode = !gameObject.debugMode;
 				}
 			}
+
+			if (Input.GetKeyUp(Key.C))
+			{
+				Console.WriteLine(player.chargedAmount);
+			}
 		}
 	
 

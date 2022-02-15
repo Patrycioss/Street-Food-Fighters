@@ -27,12 +27,12 @@ namespace GXPEngine.Entities
       public PastaMan() : base("hitboxes/pasta_man.png")
       {
          SetModel("models/pasta_man.png",1,1,-40,-110);
-         SetBodyHitbox("hitboxes/burger_woman.png", -25, -model.height*0.8f);
+         SetBodyHitbox("hitboxes/pasta_man.png", -25, -model.height*0.8f);
          health = 3.0f;
          speed = 0.5f;
 
          SetMainAbility(new PastaWhip());
-         SetSpecialAbility(new MeatBallShooter());
+         SetSpecialAbility(new MeatballShooter());
          
          SetAnimationDelay(170);
       }
@@ -59,11 +59,24 @@ namespace GXPEngine.Entities
 
    public class TomatoZombie : Enemy
    {
-      public TomatoZombie() : base("hitboxes/tomato_zombie.png")
+      public TomatoZombie() : base("hitboxes/tomato_zombie_feet.png")
       {
+         SetModel("models/tomato_zombie.png",1,1,-40,-110);
+         SetBodyHitbox("hitboxes/tomato_zombie.png",-40,-110);
          
+         SetTarget(myGame.player);
+         
+         SetMainAbility(new BurgerPunch());
+         
+         health = 2.0f;
+         speed = 0.2f;
+
+         attackRadius = 500;
+         detectionRadius = 100;
       }
    }
+
+  
    
    
 }

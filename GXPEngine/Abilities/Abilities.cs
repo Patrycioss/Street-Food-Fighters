@@ -58,37 +58,20 @@ namespace GXPEngine.Abilities
             coolDown = 500;
         }
     }
-
-    public class MeatBallShooter : Ability
+    
+    public class SeedShooter : ProjectileShooter
     {
-        private float speed;
-        
-        public MeatBallShooter() : base("hitboxes/meat_ball.png", 1, 1)
+        public SeedShooter()
         {
-            damage = 3;
-            speed = 1.0f;
-            xCoordinates = new Vector2(0, width);
-
-            y = -0.75f * height;
-
-            coolDown = 500;
-
-
+         
         }
+    }
 
-        protected override void Action()
+    public class MeatballShooter : ProjectileShooter
+    {
+        public MeatballShooter()
         {
-            Console.WriteLine(mirrorX);
-            if (mirrorX)
-            {
-                speed = -speed;
-            }
-            
-            Meatball meatball = new Meatball(speed,damage, parent);
-
-            Vector2 vector2 = TransformPoint(parent.parent.x + xCoordinates.x, parent.parent.y + y);
-            meatball.SetXY(vector2.x,vector2.y);
-            StageLoader.AddObject(meatball);
+         
         }
     }
 }
