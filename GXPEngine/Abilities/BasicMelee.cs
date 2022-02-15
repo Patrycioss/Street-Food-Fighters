@@ -16,7 +16,7 @@ namespace GXPEngine.Abilities
             visible = false;
         }
 
-        public void Update()
+        public new void Update()
         {
             //Usage cooldown
             base.Update();

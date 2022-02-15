@@ -2,8 +2,6 @@
 {
     public class Barrier : Sprite
     {
-        private EasyDraw canvas;
-
         /// <summary>
         /// Object that functions as an invisible barrier for entities
         /// </summary>
@@ -11,14 +9,10 @@
         {
             visible = false;
         }
-
+ 
         void Update()
         {
-        }
-
-        void Debug()
-        {
-            visible = !visible;
+            visible = debugMode;
         }
     }
 }
