@@ -1,5 +1,6 @@
 ﻿using System;
 using GXPEngine.Core;
+using GXPEngine.Entities;
 using GXPEngine.StageManagement;
 
 namespace GXPEngine.Abilities
@@ -58,7 +59,7 @@ namespace GXPEngine.Abilities
             coolDown = 500;
         }
     }
-    
+
     public class SeedShooter : Ability
     {
         private float speed;
@@ -69,9 +70,6 @@ namespace GXPEngine.Abilities
             xCoordinates = new Vector2(0, width);
             y = -0.75f * height;
             coolDown = 500;
-            
-            
-        
         }
 
         protected override void Action()
@@ -83,7 +81,7 @@ namespace GXPEngine.Abilities
             direction.Normalize();
             Console.WriteLine(direction);
 
-            Seed seed = new Seed(direction,speed,damage, parent);
+            Seed seed = new Seed(direction,speed,damage, (Entity) parent);
      
             Vector2 vector2 = TransformPoint(parent.parent.x + xCoordinates.x, parent.parent.y + y);
             seed.SetXY(vector2.x,vector2.y);
@@ -96,19 +94,23 @@ namespace GXPEngine.Abilities
     public class MeatballShooter : Ability
     {
         private float speed;
+        private Vector2 direction;
         public MeatballShooter() : base("hitboxes/meat_ball.png",1,1)
         {
             damage = 3;
-            speed = 1;
+            speed = 0.5f;
             xCoordinates = new Vector2(0, width);
             y = -0.75f * height;
             coolDown = 500;
          
         }
         
-        protected override void Action()                                                                
-        {                                                                                               
-            Meatball meatball = new Meatball(mirrorX?-speed:speed,damage, parent);                      
+        protected override void Action()
+        {
+            Entity parent = (Entity) this.parent;
+            Vector2 direction = new Vector2(parent.mirrored ? -1 : 1, 0);
+
+            Meatball meatball = new Meatball(direction,speed,damage, parent);                      
                                                                                                  
             Vector2 vector2 = TransformPoint(parent.parent.x + xCoordinates.x, parent.parent.y + y);    
             meatball.SetXY(vector2.x,vector2.y);                                                        

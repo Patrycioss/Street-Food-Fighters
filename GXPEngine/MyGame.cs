@@ -7,16 +7,15 @@ namespace GXPEngine
 	public class MyGame : Game
 	{
 		public Player player;
-		private Hud hud;
+		public Hud hud;
 
 
 
-		private MyGame() : base(1366, 768, false)
+		private MyGame() : base(1366, 768, false, pVSync: true)
 		{
 			//4 x 64 =  256 
 			//768 - 256 = 512
 			//768 - 320 = 448
-
 
 			
 			debugMode = false;

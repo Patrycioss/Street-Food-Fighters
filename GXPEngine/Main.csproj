@@ -38,8 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abilities\Abilities.cs" />
-    <Compile Include="Abilities\Meatball.cs" />
-    <Compile Include="Abilities\Seed.cs" />
+    <Compile Include="Abilities\Projectiles.cs" />
     <Compile Include="Barrier.cs" />
     <Compile Include="Entities\Characters.cs" />
     <Compile Include="Entities\Enemy.cs" />
