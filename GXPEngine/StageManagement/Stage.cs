@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GXPEngine.Abilities;
 using GXPEngine.Entities;
 using TiledMapParser;
 
@@ -14,7 +13,7 @@ namespace GXPEngine.StageManagement
         private int stageWidth;
         private int stageHeight;
 
-        private readonly Stages stage;
+        public Stages stage { get; private set; }
 
         /// <summary>
         /// Object that holds all information about the current stage including objects
@@ -73,19 +72,27 @@ namespace GXPEngine.StageManagement
                         AddChild(barrier);
                         break;
                     
-                    case 35:
+                    case 2:
                         myGame.player = new Player();
                         myGame.player.SetXY(x,y);
                         AddChild(myGame.player);
                         break;
                     
-                    case 25:
+                    case 3:
+                        //Add candy cane thing
+                        break;
+                    
+                    case 4:
+                        //Add lollipop thing
+                        break;
+                    
+                    case 5:
                         PizzaZombie pizzaZombie = new PizzaZombie();
                         pizzaZombie.SetXY(x,y);
                         AddChild(pizzaZombie);
                         break;
                     
-                    case 34:
+                    case 6:
                         TomatoZombie tomatoZombie = new TomatoZombie();
                         tomatoZombie.SetXY(x,y);
                         AddChild(tomatoZombie);
