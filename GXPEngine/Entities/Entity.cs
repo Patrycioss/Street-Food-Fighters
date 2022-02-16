@@ -21,7 +21,7 @@ namespace GXPEngine.Entities
         public Ability mainAbility { get; private set; }
         public Ability specialAbility { get; private set; }
 
-        private bool abilityCanBeUsed;
+        protected bool abilityCanBeUsed;
         private bool usingAbility;
 
         private int abilityCooldown;
@@ -87,7 +87,9 @@ namespace GXPEngine.Entities
             usingAbility = false;
             abilityCanBeUsed = true;
 
-            abilityCooldown = 1000;
+
+            abilityDuration = 500;
+            abilityCooldown = 2000;
         }
         
         protected void UseMainAbility()
@@ -95,17 +97,15 @@ namespace GXPEngine.Entities
             if (abilityCanBeUsed)
             {
                 abilityCanBeUsed = false;
+                Console.WriteLine(abilityCanBeUsed);
+
+                currentState = State.MainAttack;
+                usingAbility = true;
 
                 if (mainAbility == null) throw new Exception(this + " doesn't have a main ability! Please set one using SetMainAbility()");
                 
                 mainAbility.Use();
-                
-                currentState = State.MainAttack;
-
-                abilityDuration = basicAnimationDelay * (model.frameCount + 2);
                 abilityUseTime = Time.now;
-
-                usingAbility = true;                
             }
         }
 
@@ -226,7 +226,11 @@ namespace GXPEngine.Entities
 
             if (!abilityCanBeUsed)
             {
-                if (Time.now - abilityUseTime > abilityCooldown) abilityCanBeUsed = true; 
+                if (Time.now - abilityUseTime > abilityCooldown)
+                {
+                    Console.WriteLine("ha");
+                    abilityCanBeUsed = true;
+                } 
             }
             
             
@@ -249,8 +253,7 @@ namespace GXPEngine.Entities
             UpdateState();
 
             //Updates movement and fixes mirror
-            if (velocity != new Vector2(0, 0) && !usingAbility) UpdateMovement();
-            else velocity.Set(0,0);
+            if (velocity != new Vector2(0, 0)) UpdateMovement();
             
             
             //Debugging
@@ -269,8 +272,6 @@ namespace GXPEngine.Entities
             model.alpha = damageable ? 1 : Utils.Random(60, 100);
             
             UpdateAnimation();
-
-            Console.WriteLine(model.x);
             
         }
         
@@ -336,7 +337,7 @@ namespace GXPEngine.Entities
         /// </summary>
         private void UpdateState()
         {
-            if (!usingAbility) {currentState = velocity.Magnitude() == 0 ? State.Stand : State.Walk;}
+            if (!usingAbility){currentState = velocity.Magnitude() == 0 ? State.Stand : State.Walk;}
         }
         
         /// <summary>

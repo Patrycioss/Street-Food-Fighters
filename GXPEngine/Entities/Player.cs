@@ -39,7 +39,7 @@ namespace GXPEngine.Entities
             swapDelay = 2000;
             
             entityType = "player";
-            invincibilityDuration = 5000;
+            invincibilityDuration = 1000;
             triggerDelay = 2000;
 
             canUseSpecial = true;
@@ -55,16 +55,6 @@ namespace GXPEngine.Entities
                 timeAtTrigger = Time.now;
             }
 
-            if (Input.GetKeyUp(Key.F))
-            {
-                UseMainAbility();
-            }
-
-            if (Input.GetKeyUp(Key.G) && canUseSpecial)
-            {
-                UseSpecialAbility();
-                canUseSpecial = false;
-            }
             
             if (chargedAmount >= necessaryCharge)
             {
@@ -78,12 +68,29 @@ namespace GXPEngine.Entities
                 timeAtSwap = Time.now;            
             }
             
+               
+            if (Input.GetKey(Key.F) && abilityCanBeUsed)
+            {
+                Console.WriteLine(abilityCanBeUsed);
+                UseMainAbility();
+                abilityCanBeUsed = false;
+            }
 
-            velocity.Add(GetMovementInputs());
+            else if (Input.GetKey(Key.G) && canUseSpecial && abilityCanBeUsed)
+            {
+                UseSpecialAbility();
+                canUseSpecial = false;
+                abilityCanBeUsed = false;
+            }
+            else velocity.Add(GetMovementInputs());
+
 
             
             base.Update();
             //System.Console.WriteLine("AnimationSprite x: {0}, y: {1} \n Feet x: {2}, y: {3}", model.x, model.y, canvas.x, canvas.y);
+            
+            
+         
         }
 
         /// <summary>

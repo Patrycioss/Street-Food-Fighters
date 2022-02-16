@@ -68,7 +68,6 @@ namespace GXPEngine.Abilities
     {
         private int duration;
         private int doTime;
-        private bool done;
 
         public Meatball(Vector2 setDirection, float setSpeed, float setDamage, Entity parent) : base(setDirection,
             setSpeed, setDamage, parent,
@@ -82,8 +81,6 @@ namespace GXPEngine.Abilities
 
         new void Update()
         {
-            Console.WriteLine("ja");
-            
             if (Time.now - doTime > duration)
             {
                 visible = true;

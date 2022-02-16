@@ -11,8 +11,6 @@ namespace GXPEngine.StageManagement
     {
         public static Stage currentStage;
         public static Pivot stageContainer;
-
-        private static MyGame myGame;
         
         /// <summary>
         /// Load in a new stage and get rid of the previous one if there is still one

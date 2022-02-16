@@ -1,0 +1,3 @@
+Movement : Arrow keys
+Main atack : F
+Special attack : G (can you do every 5 kills and at start)
