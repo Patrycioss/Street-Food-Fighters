@@ -25,6 +25,10 @@ namespace GXPEngine.Abilities
         protected int attackDuration;
         protected int timeAtAttack;
         protected bool attacking;
+        
+        //Sound
+        protected Sound sound;
+        protected float soundVolume;
 
 
 
@@ -71,6 +75,11 @@ namespace GXPEngine.Abilities
                 Action();
                 timeAtUse = Time.now;
                 usable = false;
+
+                if (sound != null)
+                {
+                    sound.Play(volume: soundVolume);
+                }
             }
         }
 
@@ -78,6 +87,12 @@ namespace GXPEngine.Abilities
         /// Action that can be overridden in subclasses to allow for one time happening actions
         /// </summary>
         protected virtual void Action() {}
+
+        protected void SetSound(string path, float volume = 1.0f)
+        {
+            sound = new Sound(path);
+            soundVolume = volume;
+        }
     }
 }
 

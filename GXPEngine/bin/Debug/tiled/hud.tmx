@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="22" height="13" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="6">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="22" height="13" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="14">
  <tileset firstgid="1" name="colors" tilewidth="64" tileheight="64" tilecount="1" columns="1">
-  <image source="../../../../../../../../../1.2/Programming/GXPENGINE/GXPEngine_1_2_personalTry/GXPEngine/bin/Debug/colors.png" width="64" height="64"/>
+  <image source="../placeholders/colors.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="2" name="circle" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="../placeholders/circle.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="3" name="specialbarframe" tilewidth="550" tileheight="40" tilecount="1" columns="1">
+  <image source="../placeholders/specialbarframeTHIC.png" width="552" height="42"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="22" height="13">
   <data encoding="csv">
@@ -21,12 +27,12 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="1" name="hearts" type="hearts" gid="1" x="192" y="64" width="64" height="64"/>
-  <object id="2" name="&quot;Score&quot;" x="1090.5" y="18.8644" width="180.171" height="41.2439">
-   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">Score: </text>
+  <object id="3" name="size changeable in gxp" type="scorePoints" x="1088.66" y="52.1977" width="180.171" height="41.2439">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="19" wrap="1" color="#ffffff">Score: </text>
   </object>
-  <object id="3" type="scorePoints" x="1236.66" y="18.8644" width="180.171" height="41.2439">
-   <text fontfamily="MS Shell Dlg 2" pixelsize="24" wrap="1" color="#ffffff">0</text>
-  </object>
+  <object id="8" name="heartsPlacement" type="hearts" gid="1" x="257.333" y="65.3333" width="64" height="64"/>
+  <object id="9" name="characterModel2" type="characterBig" gid="2" x="77.3333" y="108" width="102" height="100"/>
+  <object id="10" name="characterModel1" type="characterSmall" gid="2" x="8" y="146.667" width="64" height="64"/>
+  <object id="13" name="specialbar" type="specialBar" gid="3" x="191.667" y="117.333" width="550" height="40"/>
  </objectgroup>
 </map>

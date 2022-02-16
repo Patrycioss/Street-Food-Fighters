@@ -14,9 +14,9 @@ namespace GXPEngine
 		
 		private uint _color = 0xFFFFFF;
 		private float _alpha = 1.0f;
-		
-		protected bool mirrorX = false;
-		protected bool mirrorY = false;
+
+		public bool mirrorX { get; protected set; } = false;
+		public bool mirrorY { get; protected set; }= false;
 
 		public BlendMode blendMode = null;
 

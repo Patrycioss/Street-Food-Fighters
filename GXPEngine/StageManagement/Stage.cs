@@ -80,7 +80,10 @@ namespace GXPEngine.StageManagement
                         break;
                     
                     case 3:
-                        //Add candy cane thing
+                        AnimatedDecoration candy = new AnimatedDecoration("models/candy_cane.png", 24, 1, 50);
+                        candy.SetXY(x - 128,y - 128);
+                        candy.SetScaleXY(2.0f);
+                        AddChild(candy);
                         break;
                     
                     case 4:
@@ -103,8 +106,8 @@ namespace GXPEngine.StageManagement
 
             //Adds a barrier to the left side of the stage
             Barrier leftBorder = new Barrier();
-            leftBorder.SetXY(-1,0);
-            leftBorder.width = 1;
+            leftBorder.SetXY(-64,0);
+            leftBorder.width = 64;
             leftBorder.height = stageHeight;
             AddChild(leftBorder);
 
@@ -112,8 +115,15 @@ namespace GXPEngine.StageManagement
             Barrier ground = new Barrier();
             ground.SetXY(0,stageHeight);
             ground.width = stageWidth;
-            ground.height = 1;
+            ground.height = 64;
             AddChild(ground);
+            
+            //Adds a barrier to the right side of the map
+            Barrier rightBorder = new Barrier();
+            rightBorder.SetXY(stageWidth,0);
+            rightBorder.width = 64;
+            rightBorder.height = stageHeight;
+            AddChild(rightBorder);
         }
         
         /// <summary>

@@ -7,7 +7,7 @@ namespace GXPEngine.Entities
     public class Player : Entity
     {
         public int chargedAmount { get; private set; }
-        private int necessaryCharge;
+        public int necessaryCharge { get; private set; }
         private bool canUseSpecial;
         
         private int timeAtTrigger;
@@ -15,12 +15,14 @@ namespace GXPEngine.Entities
 
         private BurgerWoman burgerWoman;
         private PastaMan pastaMan;
-        private Entity currentCharacter;
+        public Entity currentCharacter { get; private set; }
 
 
         private int timeAtSwap;
         private int swapDelay;
 
+        private Sound swapSound;
+        private float swapSoundVolume;
 
         public Player() : base("hitboxes/burger_woman_feet.png")
         {
@@ -45,6 +47,9 @@ namespace GXPEngine.Entities
             canUseSpecial = true;
             necessaryCharge = 5;
             chargedAmount = 0;
+
+            swapSound = new Sound("sounds/swap.wav");
+            swapSoundVolume = 0.2f;
         }
 
         protected override void Update()
@@ -56,9 +61,14 @@ namespace GXPEngine.Entities
             }
 
             
+            if (Input.GetKey(Key.Y))                        /////// DEBUG: for testing the Specialbar
+            {
+                chargedAmount = necessaryCharge;
+                myGame.hud.ExternalCanvasUpdate();
+            }
+            
             if (chargedAmount >= necessaryCharge)
             {
-                chargedAmount -= necessaryCharge;
                 canUseSpecial = true;
             }
 
@@ -81,6 +91,9 @@ namespace GXPEngine.Entities
                 UseSpecialAbility();
                 canUseSpecial = false;
                 abilityCanBeUsed = false;
+                
+                chargedAmount = 0;
+                myGame.hud.ExternalCanvasUpdate();
             }
             else velocity.Add(GetMovementInputs());
 
@@ -104,7 +117,7 @@ namespace GXPEngine.Entities
         public override void Damage(float amount)
         {
             base.Damage(amount);
-            myGame.hud.RemoveHearts((int)amount);
+            myGame.hud.RemoveHeart();
         }
      
         protected override void ChangeMirrorStatus()
@@ -168,6 +181,8 @@ namespace GXPEngine.Entities
         /// </summary>
         private void SwapCharacters()
         {
+            swapSound.Play(volume: swapSoundVolume);
+            
             if (currentCharacter == burgerWoman)
             {
                 SetCurrentCharacter(pastaMan);
@@ -194,8 +209,9 @@ namespace GXPEngine.Entities
             SetModel(newCharacter.model.name, newCharacter.modelColumns, newCharacter.modelRows, currentCharacter.model.x, currentCharacter.model.y);
             SetMainAbility(newCharacter.mainAbility);
             SetSpecialAbility(newCharacter.specialAbility);
-
-
+            
+            speed = newCharacter.speed;
+            
             walkAnimationDelay = newCharacter.walkAnimationDelay;
             idleAnimationDelay = newCharacter.idleAnimationDelay;
             specialAnimationDelay = newCharacter.specialAnimationDelay;
