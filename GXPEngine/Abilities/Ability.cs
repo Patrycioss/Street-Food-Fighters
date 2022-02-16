@@ -63,7 +63,7 @@ namespace GXPEngine.Abilities
             {
                 if (!attacking)
                 {
-                    visible = true;
+                    visible = false;
                     attacking = true;
                     timeAtAttack = Time.now;
                 }

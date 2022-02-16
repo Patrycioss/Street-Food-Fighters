@@ -10,16 +10,22 @@ namespace GXPEngine.Entities
         private GameObject target;              //setting to player in game (later change it to level)
         private Vector2 direction;              //moving direction
 
+        private int detectionRadius;
+
+        private bool activated;
+
         /// <summary>
         /// A temporary class for an enemy that tracks the player, will later most likely function as a base class for enemies.
         /// </summary>
         protected Enemy(string feetPath) : base(feetPath)
         {
             //Invincibility duration for all enemies (can be overriden individually)
-            invincibilityDuration = 0;
+            invincibilityDuration = 500;
 
             entityType = "enemy";
-        
+
+            detectionRadius = myGame.width/2;
+            
             collider.isTrigger = false;
             speed = 0.1f;
         }
@@ -36,23 +42,37 @@ namespace GXPEngine.Entities
     
         protected override void Update()
         {
-            ChangeMirrorStatus();
-            FixMirroring();
-            
-            if (target != null)
+            myGame = (MyGame) game;
+
+            if (!activated)
             {
-                if (DistanceTo(target) >= attackRadius)
+                if ((Mathf.Abs(x - myGame.player.x) < myGame.width * 0.6f))
                 {
-                    //Calculates the the difference between the target and the current position and then normalizes it to get the direction
-                    Vector2 targetPosition = new Vector2(target.x, target.y);
-                    direction = targetPosition - new Vector2(x, y);
-                    direction.Normalize();
-                    velocity = direction;
-                } 
+                    activated = true;
+                }
             }
-            else Console.WriteLine("Assign a target to enemy: " + this);
-        
-            base.Update();
+
+            if (activated)
+            {
+                ChangeMirrorStatus();
+                FixMirroring();
+
+                if (target != null)
+                {
+                    if (DistanceTo(target) >= attackRadius)
+                    {
+                        //Calculates the the difference between the target and the current position and then normalizes it to get the direction
+                        Vector2 targetPosition = new Vector2(target.x, target.y);
+                        direction = targetPosition - new Vector2(x, y);
+                        direction.Normalize();
+                        velocity = direction;
+                    }
+                }
+                else
+                    Console.WriteLine("Assign a target to enemy: " + this);
+
+                base.Update();
+            }
         }
 
         protected override void ChangeMirrorStatus()

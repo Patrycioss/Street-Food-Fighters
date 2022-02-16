@@ -10,8 +10,8 @@ namespace GXPEngine.StageManagement
         private Map stageData;
         private int tileSize;
         
-        private int stageWidth;
-        private int stageHeight;
+        public int stageWidth { get; private set; }
+        public int stageHeight { get; private set; }
 
         public Stages stage { get; private set; }
 
