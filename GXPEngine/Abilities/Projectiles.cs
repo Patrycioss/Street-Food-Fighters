@@ -66,7 +66,32 @@ namespace GXPEngine.Abilities
     /// </summary>
     public class Meatball : Projectile
     {
-        public Meatball(Vector2 setDirection, float setSpeed, float setDamage, Entity parent) : base(setDirection, setSpeed, setDamage, parent,
-            "hitboxes/meat_ball.png", 1, 1) {}
+        private int duration;
+        private int doTime;
+        private bool done;
+
+        public Meatball(Vector2 setDirection, float setSpeed, float setDamage, Entity parent) : base(setDirection,
+            setSpeed, setDamage, parent,
+            "models/meatball.png", 1, 1)
+        {
+            duration = 200;
+            visible = false;
+        }
+
+        void Update()
+        {
+            base.Update();
+
+            if (!done)
+            {
+                if (Time.now - doTime > duration)
+                {
+                    visible = true;
+                    done = true;
+                }
+            }
+           
+            
+        }
     }
 }

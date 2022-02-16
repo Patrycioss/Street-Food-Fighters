@@ -2,6 +2,7 @@
 
 using System;
 using GXPEngine.Abilities;
+using GXPEngine.Core;
 
 namespace GXPEngine.Entities
 {
@@ -33,7 +34,7 @@ namespace GXPEngine.Entities
    {
       public PastaMan() : base("hitboxes/pasta_man.png")
       {
-         SetModel("models/pasta_man.png",56,1,-40,-110);
+         SetModel("models/pasta_man.png",53,1,-40,-110, 256);
          SetBodyHitbox("hitboxes/pasta_man.png", -25, -model.height*0.8f);
          health = 3.0f;
          speed = 0.5f;
@@ -48,9 +49,11 @@ namespace GXPEngine.Entities
 
          basicAnimationDelay = 100;
          specialAnimationDelay = 100;
-         
-         
-         
+
+         idleCycle = new Vector2(25, 5);
+         walkingCycle = new Vector2(0, 25);
+         mainCycle = new Vector2(30, 11);
+         specialCycle = new Vector2(41, 12);
       }  
    }
 

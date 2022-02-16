@@ -85,6 +85,8 @@ namespace GXPEngine.Entities
             
 
             velocity.Add(GetMovementInputs());
+
+            Console.WriteLine(model.x);
             
             base.Update();
             //System.Console.WriteLine("AnimationSprite x: {0}, y: {1} \n Feet x: {2}, y: {3}", model.x, model.y, canvas.x, canvas.y);
@@ -193,6 +195,12 @@ namespace GXPEngine.Entities
                 idleAnimationDelay = newCharacter.idleAnimationDelay;
                 specialAnimationDelay = newCharacter.specialAnimationDelay;
                 basicAnimationDelay = newCharacter.basicAnimationDelay;
+
+                walkingCycle = newCharacter.walkingCycle;
+                idleCycle = newCharacter.idleCycle;
+                mainCycle = newCharacter.mainCycle;
+                specialCycle = newCharacter.specialCycle;
+                
 
                 currentState = newCharacter.currentState;
                 unusedPixels = newCharacter.unusedPixels;

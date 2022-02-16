@@ -66,7 +66,7 @@ namespace GXPEngine.Abilities
         public SeedShooter() : base("hitboxes/seed.png",1,1)
         {
             damage = 1;
-            speed = 1;
+            speed = 0.7f;
             xCoordinates = new Vector2(0, width);
             y = -0.75f * height;
             coolDown = 500;
@@ -83,9 +83,8 @@ namespace GXPEngine.Abilities
 
             Seed seed = new Seed(direction,speed,damage, (Entity) parent);
      
-            Vector2 vector2 = TransformPoint(parent.parent.x + xCoordinates.x, parent.parent.y + y);
-            seed.SetXY(vector2.x,vector2.y);
             StageLoader.AddObject(seed);
+            seed.SetXY(parent.x,parent.y - 50);
         }
         
         
@@ -94,7 +93,7 @@ namespace GXPEngine.Abilities
     public class MeatballShooter : Ability
     {
         private float speed;
-        public MeatballShooter() : base("hitboxes/meat_ball.png",1,1)
+        public MeatballShooter() : base("hitboxes/basically_nothing.png",1,1)
         {
             damage = 3;
             speed = 0.5f;
@@ -111,9 +110,9 @@ namespace GXPEngine.Abilities
 
             Meatball meatball = new Meatball(direction,speed,damage, parent);                      
                                                                                                  
-            Vector2 vector2 = TransformPoint(parent.parent.x + xCoordinates.x, parent.parent.y + y);    
-            meatball.SetXY(vector2.x,vector2.y);                                                        
-            StageLoader.AddObject(meatball);                                                            
+            StageLoader.AddObject(meatball);      
+            meatball.SetXY(parent.x,parent.y - 120);                                                        
+
         }                                                                                               
 
     }
