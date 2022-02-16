@@ -14,7 +14,7 @@ namespace GXPEngine.Abilities
             y = -1.5f * height;
             alpha = 50;
             attackDuration = 300;
-            coolDown = 500;
+            coolDown = 1500;
         }
     }
 

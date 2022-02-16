@@ -13,7 +13,6 @@ namespace GXPEngine
     
         private Vector2 scorePos;
         private Vector2 healthPos;            
-        private Vector2 specialBarPos;        
    
         private Sprite[] hearts;              
     
