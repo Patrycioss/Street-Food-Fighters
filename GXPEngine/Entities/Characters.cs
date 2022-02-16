@@ -30,17 +30,10 @@ namespace GXPEngine.Entities
          SetModel("models/burger_woman.png",53,1, -40,-110);
          SetBodyHitbox("hitboxes/burger_woman.png", -25,-model.height*0.8f);
          health = 3.0f;
-         speed = 0.5f;
+         speed = 0.7f;
 
          SetMainAbility(new BurgerPunch());
          SetSpecialAbility(new BurgerExplosion());
-
-        
-
-         
-         
-         
-
       }
    }
 
@@ -51,7 +44,7 @@ namespace GXPEngine.Entities
          SetModel("models/pasta_man.png",53,1,-40,-110);
          SetBodyHitbox("hitboxes/pasta_man.png", -25, -model.height*0.8f);
          health = 3.0f;
-         speed = 0.5f;
+         speed = 0.7f;
 
          SetMainAbility(new PastaWhip());
          SetSpecialAbility(new MeatballShooter());
@@ -104,6 +97,8 @@ namespace GXPEngine.Entities
          speed = 0.2f;
 
          attackRadius = 500;
+
+         SetHitSound("sounds/tomato_damage.wav");
       }
    }
 

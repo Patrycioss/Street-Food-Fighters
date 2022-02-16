@@ -10,19 +10,16 @@ namespace GXPEngine
 		public Player player;
 		public Hud hud;
 		private int scrollX;
-
-		public Vector2 xBoundaries;
-
+		
 		private Sprite background;
 
-
-
-
+		private Sound music;
+		
 		private MyGame() : base(1366, 768, false, pVSync: true)
 		{
-			//4 x 64 =  256 
-			//768 - 256 = 512
-			//768 - 320 = 448
+			music = new Sound("sounds/music.wav", true, true);
+			music.Play(volume: 0.5f);
+
 			scrollX = width / 2;
 			
 			debugMode = false;
@@ -32,13 +29,8 @@ namespace GXPEngine
 
 			StageLoader.LoadStage(Stages.Test);
 			
-	
-
-			
 			hud = new Hud();    
 			AddChild(hud);
-			
-
 		}
 	
 		void Update()

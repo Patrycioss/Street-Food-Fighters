@@ -66,6 +66,12 @@ namespace GXPEngine.Entities
 
         //Body
         public Sprite bodyHitbox { get; private set; }
+        
+        //Sounds
+        private Sound hitSound;
+        private float hitSoundVolume;
+        private Sound deathSound;
+        private float deathSoundVolume;
 
         
         /// <summary>
@@ -89,7 +95,7 @@ namespace GXPEngine.Entities
 
 
             abilityDuration = 500;
-            abilityCooldown = 2000;
+            abilityCooldown = 1500;
         }
         
         protected void UseMainAbility()
@@ -125,7 +131,6 @@ namespace GXPEngine.Entities
                 abilityUseTime = Time.now;
 
                 usingAbility = true;
-                
             }
         }
         
@@ -194,6 +199,12 @@ namespace GXPEngine.Entities
                 damageTime = Time.now;
                 damageable = false;
                 Console.WriteLine(model.name + ", " + "Health: " + health);
+
+                if (hitSound != null)
+                {
+                    Console.WriteLine("ha");
+                    hitSound.Play(volume: hitSoundVolume);
+                }
             }
         }
 
@@ -204,6 +215,25 @@ namespace GXPEngine.Entities
         {
             health += amount;
         }
+
+        /// <summary>
+        /// Sets the sound that is played when damaged
+        /// </summary>
+        protected void SetHitSound(string path, float volume = 1f)
+        {
+            hitSound = new Sound(path);
+            hitSoundVolume = volume;
+        }
+        
+        /// <summary>
+        /// Sets the sound that is played when killed
+        /// </summary>
+        protected void SetDeathSound(string path, float volume = 1f)
+        {
+            deathSound = new Sound(path);
+            deathSoundVolume = volume;
+        }
+        
         
         /// <summary>
         /// Kills the entity

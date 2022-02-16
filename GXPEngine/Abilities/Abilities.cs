@@ -15,6 +15,8 @@ namespace GXPEngine.Abilities
             alpha = 50;
             attackDuration = 300;
             coolDown = 1500;
+            
+            SetSound("sounds/burger_punch.wav",0.5f);
         }
     }
 
@@ -28,6 +30,8 @@ namespace GXPEngine.Abilities
             alpha = 50;
             attackDuration = 300;
             coolDown = 1000;
+            
+            SetSound("sounds/pasta_whip.wav",0.5f);
         }
     }
 
@@ -63,7 +67,7 @@ namespace GXPEngine.Abilities
     public class SeedShooter : Ability
     {
         private float speed;
-        public SeedShooter() : base("hitboxes/seed.png",1,1)
+        public SeedShooter() : base("hitboxes/basically_nothing.png",1,1)
         {
             damage = 1;
             speed = 0.7f;
