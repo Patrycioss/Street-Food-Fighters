@@ -10,8 +10,24 @@ namespace GXPEngine.Entities
    {
       public BurgerWoman() : base("hitboxes/burger_woman_feet.png")
       {
+         unusedPixels = 256;
          
-         SetModel("models/burger_woman_idle.png",1,1, -40,-110);
+         idleAnimationDelay = 100;
+         walkAnimationDelay = 40;
+
+         basicAnimationDelay = 60;
+         specialAnimationDelay = 100;
+
+
+
+         idleCycle = new Vector2(25, 5);
+         walkingCycle = new Vector2(0, 25);
+         mainCycle = new Vector2(30, 11);
+         specialCycle = new Vector2(41, 12);
+
+         
+         
+         SetModel("models/burger_woman.png",53,1, -40,-110);
          SetBodyHitbox("hitboxes/burger_woman.png", -25,-model.height*0.8f);
          health = 3.0f;
          speed = 0.5f;
@@ -19,13 +35,11 @@ namespace GXPEngine.Entities
          SetMainAbility(new BurgerPunch());
          SetSpecialAbility(new BurgerExplosion());
 
-         idleAnimationDelay = 200;
-         walkAnimationDelay = 200;
+        
 
-         specialAnimationDelay = 200;
-         basicAnimationDelay = 200;
-
-         unusedPixels = 0;
+         
+         
+         
 
       }
    }
@@ -34,7 +48,7 @@ namespace GXPEngine.Entities
    {
       public PastaMan() : base("hitboxes/pasta_man.png")
       {
-         SetModel("models/pasta_man.png",53,1,-40,-110, 256);
+         SetModel("models/pasta_man.png",53,1,-40,-110);
          SetBodyHitbox("hitboxes/pasta_man.png", -25, -model.height*0.8f);
          health = 3.0f;
          speed = 0.5f;

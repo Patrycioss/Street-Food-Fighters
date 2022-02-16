@@ -142,13 +142,13 @@ namespace GXPEngine.Entities
 
         
 
-        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0, int newUnusedPixels = 0)
+        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0)
         {
             model = new AnimationSprite(modelPath, columns, rows, addCollider: false);
 
             model.SetXY(x,y);
             
-            xVectorModel = new Vector2(model.x - newUnusedPixels, model.x);
+            xVectorModel = new Vector2(model.x - unusedPixels, model.x);
 
             modelColumns = columns;
             modelRows = rows;

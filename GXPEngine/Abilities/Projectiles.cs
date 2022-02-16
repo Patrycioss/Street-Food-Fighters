@@ -74,24 +74,21 @@ namespace GXPEngine.Abilities
             setSpeed, setDamage, parent,
             "models/meatball.png", 1, 1)
         {
-            duration = 200;
+            duration = 300;
             visible = false;
+            doTime = Time.now;
+
         }
 
-        void Update()
+        new void Update()
         {
-            base.Update();
-
-            if (!done)
-            {
-                if (Time.now - doTime > duration)
-                {
-                    visible = true;
-                    done = true;
-                }
-            }
-           
+            Console.WriteLine("ja");
             
+            if (Time.now - doTime > duration)
+            {
+                visible = true;
+                base.Update();
+            } 
         }
     }
 }

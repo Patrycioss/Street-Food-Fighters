@@ -86,8 +86,6 @@ namespace GXPEngine.Abilities
             StageLoader.AddObject(seed);
             seed.SetXY(parent.x,parent.y - 50);
         }
-        
-        
     }   
 
     public class MeatballShooter : Ability
@@ -96,9 +94,9 @@ namespace GXPEngine.Abilities
         public MeatballShooter() : base("hitboxes/basically_nothing.png",1,1)
         {
             damage = 3;
-            speed = 0.5f;
-            xCoordinates = new Vector2(0, width);
-            y = -0.75f * height;
+            speed = 1.0f;
+            xCoordinates = new Vector2(0, width-10);
+            y = -0.7f * height;
             coolDown = 500;
          
         }
@@ -111,9 +109,7 @@ namespace GXPEngine.Abilities
             Meatball meatball = new Meatball(direction,speed,damage, parent);                      
                                                                                                  
             StageLoader.AddObject(meatball);      
-            meatball.SetXY(parent.x,parent.y - 120);                                                        
-
-        }                                                                                               
-
+            meatball.SetXY(parent.x,parent.y - 120);
+        }
     }
 }

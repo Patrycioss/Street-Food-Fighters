@@ -29,13 +29,8 @@ namespace GXPEngine.Entities
 
             currentCharacter = burgerWoman;
             
-            SetBodyHitbox(currentCharacter.bodyHitbox.name, currentCharacter.bodyHitbox.x,currentCharacter.bodyHitbox.y);
-            SetModel(currentCharacter.model.name,1,1,(int)currentCharacter.model.x,(int)currentCharacter.model.y);
+            SetCurrentCharacter(currentCharacter);
 
-            SetMainAbility(currentCharacter.mainAbility); 
-            SetSpecialAbility(currentCharacter.specialAbility);
-
-            AddChild(mainAbility);
             // AddChild(specialAbility);
             
             health = 3.0f;
@@ -86,7 +81,6 @@ namespace GXPEngine.Entities
 
             velocity.Add(GetMovementInputs());
 
-            Console.WriteLine(model.x);
             
             base.Update();
             //System.Console.WriteLine("AnimationSprite x: {0}, y: {1} \n Feet x: {2}, y: {3}", model.x, model.y, canvas.x, canvas.y);
@@ -182,31 +176,32 @@ namespace GXPEngine.Entities
         /// </summary>
         private void SetCurrentCharacter(Entity newCharacter)
         {
-            if (currentCharacter != newCharacter)
-            {
-                currentCharacter = null;
-                currentCharacter = newCharacter;
-                model.Remove();
-                SetModel(newCharacter.model.name, newCharacter.modelColumns,newCharacter.modelRows, currentCharacter.model.x,currentCharacter.model.y, newCharacter.unusedPixels);
-                SetMainAbility(newCharacter.mainAbility);
-                SetSpecialAbility(newCharacter.specialAbility);
-                
-                walkAnimationDelay = newCharacter.walkAnimationDelay;
-                idleAnimationDelay = newCharacter.idleAnimationDelay;
-                specialAnimationDelay = newCharacter.specialAnimationDelay;
-                basicAnimationDelay = newCharacter.basicAnimationDelay;
+            currentCharacter = null;
+            currentCharacter = newCharacter;
+            
+            if (model != null) model.Remove();
+            
+            unusedPixels = newCharacter.unusedPixels;
+            
+            SetBodyHitbox(newCharacter.bodyHitbox.name,newCharacter.bodyHitbox.x,newCharacter.bodyHitbox.y);
+            SetModel(newCharacter.model.name, newCharacter.modelColumns, newCharacter.modelRows, currentCharacter.model.x, currentCharacter.model.y);
+            SetMainAbility(newCharacter.mainAbility);
+            SetSpecialAbility(newCharacter.specialAbility);
 
-                walkingCycle = newCharacter.walkingCycle;
-                idleCycle = newCharacter.idleCycle;
-                mainCycle = newCharacter.mainCycle;
-                specialCycle = newCharacter.specialCycle;
-                
 
-                currentState = newCharacter.currentState;
-                unusedPixels = newCharacter.unusedPixels;
+            walkAnimationDelay = newCharacter.walkAnimationDelay;
+            idleAnimationDelay = newCharacter.idleAnimationDelay;
+            specialAnimationDelay = newCharacter.specialAnimationDelay;
+            basicAnimationDelay = newCharacter.basicAnimationDelay;
 
-            }
-            else Console.WriteLine("The new character is the same as the old one!");
+            walkingCycle = newCharacter.walkingCycle;
+            idleCycle = newCharacter.idleCycle;
+            mainCycle = newCharacter.mainCycle;
+            specialCycle = newCharacter.specialCycle;
+
+            currentState = newCharacter.currentState;
+            unusedPixels = newCharacter.unusedPixels;
+
         }
     }
 }
