@@ -13,6 +13,8 @@ namespace GXPEngine
 
 		public Vector2 xBoundaries;
 
+		private Sprite background;
+
 
 
 
@@ -25,10 +27,13 @@ namespace GXPEngine
 			
 			debugMode = false;
 		
-			Sprite background = new Sprite("background.png",addCollider:false);
+			background = new Sprite("background.png",addCollider:false);
 			AddChild(background);
 
 			StageLoader.LoadStage(Stages.Test);
+			
+	
+
 			
 			hud = new Hud();    
 			AddChild(hud);
@@ -58,27 +63,27 @@ namespace GXPEngine
 		{
 			if (player != null && StageLoader.currentStage != null)
 			{
-			
 				//If the player is to the left of the center of the screen it will move to the left with the player until it hits the start of the stage
-				if (player.x + game.x < scrollX)
+				if (player.x + StageLoader.currentStage.x < scrollX)
 				{
-					game.x = scrollX - player.x;
+					StageLoader.currentStage.x = scrollX - player.x;
 				}
-				if (player.x + game.x > width - scrollX)
+				if (player.x + StageLoader.currentStage.x > width - scrollX)
 				{
-					game.x = width - scrollX - player.x;
+					StageLoader.currentStage.x = width - scrollX - player.x;
 				}
 				
 				//If the player is to the right of the center of the screen it will move to the right with the player until it hits the end of the stage
-				if (game.x > 0)
+				if (StageLoader.currentStage.x > 0)
 				{
-					game.x = 0;
+					StageLoader.currentStage.x = 0;
 				}
-				else if (player.x - game.x < width + game.width)
+				else if (StageLoader.currentStage.x < -StageLoader.currentStage.stageWidth + game.width)
 				{
-					game.x = width - scrollX - player.x;
+					StageLoader.currentStage.x = -StageLoader.currentStage.stageWidth + game.width;
 				}
-				
+
+				background.x = StageLoader.currentStage.x;
 			}
 		}
 	

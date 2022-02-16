@@ -50,11 +50,15 @@ namespace GXPEngine.Entities
 
         public byte walkAnimationDelay { get; protected set; }
         public byte idleAnimationDelay { get; protected set; }
+        
+        //x = startFrame, y = numFrames
+        public Vector2 walkingCycle { get; protected set; }
+        public Vector2 idleCycle { get; protected set; }
+        public Vector2 mainCycle { get; protected set; }
+        public Vector2 specialCycle { get; protected set; }
+        
 
         private Vector2 xVectorModel;
-
-        private Vector2 walkCycle;
-        
 
         //Feet
         private Vector2 xVectorFeet;
@@ -265,6 +269,9 @@ namespace GXPEngine.Entities
             model.alpha = damageable ? 1 : Utils.Random(60, 100);
             
             UpdateAnimation();
+
+            Console.WriteLine(model.x);
+            
         }
         
 
@@ -337,19 +344,20 @@ namespace GXPEngine.Entities
         /// </summary>
         private void UpdateAnimation()
         {
+            // if (idleCycle != null && walk)
             switch (currentState)
             {
                 case State.Stand:
-                    model.SetCycle(25,5, idleAnimationDelay);
+                    model.SetCycle((int)idleCycle.x,(int)idleCycle.y, idleAnimationDelay);
                     break;
                 case State.Walk:
-                    model.SetCycle(0,25, walkAnimationDelay);
+                    model.SetCycle((int)walkingCycle.x,(int)walkingCycle.y, walkAnimationDelay);
                     break;
                 case State.MainAttack:
-                    model.SetCycle(43,55,basicAnimationDelay);
+                    model.SetCycle((int)mainCycle.x,(int)mainCycle.y,basicAnimationDelay);
                     break;
                 case State.SpecialAttack:
-                    model.SetCycle(30,42,specialAnimationDelay);
+                    model.SetCycle((int)specialCycle.x,(int)specialCycle.y,specialAnimationDelay);
                     break;
             }
         }

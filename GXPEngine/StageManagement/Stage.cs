@@ -14,6 +14,7 @@ namespace GXPEngine.StageManagement
         public int stageHeight { get; private set; }
 
         public Stages stage { get; private set; }
+        public Pivot stageContainer;
 
         /// <summary>
         /// Object that holds all information about the current stage including objects
