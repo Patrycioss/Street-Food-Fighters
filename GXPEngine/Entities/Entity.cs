@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
 using GXPEngine.Abilities;
 using GXPEngine.Core;
 
@@ -19,13 +18,13 @@ namespace GXPEngine.Entities
 
         
         //Abilities
-        public Ability mainAbility { get; protected set; }
-        public Ability specialAbility { get; protected set; }
+        public Ability mainAbility { get; private set; }
+        public Ability specialAbility { get; private set; }
 
         private bool abilityCanBeUsed;
         private bool usingAbility;
 
-        protected int abilityCooldown;
+        private int abilityCooldown;
         private int abilityDuration;
         private int abilityUseTime;
 
@@ -52,14 +51,17 @@ namespace GXPEngine.Entities
         public byte walkAnimationDelay { get; protected set; }
         public byte idleAnimationDelay { get; protected set; }
 
-        protected Vector2 xVectorModel;
+        private Vector2 xVectorModel;
+
+        private Vector2 walkCycle;
+        
 
         //Feet
-        protected Vector2 xVectorFeet;
-        protected EasyDraw canvas;
+        private Vector2 xVectorFeet;
+        private EasyDraw canvas;
 
         //Body
-        public Sprite bodyHitbox { get; protected set; }
+        public Sprite bodyHitbox { get; private set; }
 
         
         /// <summary>
@@ -68,9 +70,6 @@ namespace GXPEngine.Entities
         /// mostly used for walking.
         /// </summary>
         /// <param name="hitboxPath">Filepath of the image used for the hitbox of the feet of the entity</param>
-        /// <param name="modelPath">Filepath of the image used for the entity's model</param>
-        /// <param name="columns">The amount of columns the spritesheet has</param>
-        /// <param name="rows">The amount of rows the spritesheet has</param>
         protected Entity(string hitboxPath) : base(hitboxPath)  //feet HitBox are the base for animationSprite, that means that the base needs to be in the correct size so that the animationSprite fits
         {
             damageable = true;
@@ -84,40 +83,35 @@ namespace GXPEngine.Entities
             usingAbility = false;
             abilityCanBeUsed = true;
 
-            abilityCooldown = 5000;
+            abilityCooldown = 1000;
         }
         
-        public void UseMainAbility()
+        protected void UseMainAbility()
         {
             if (abilityCanBeUsed)
             {
                 abilityCanBeUsed = false;
 
-                if (mainAbility == null)
-                {
-                    throw new Exception(this + " doesn't have a main ability! Please set one using SetMainAbility()");
-                }
-
-
+                if (mainAbility == null) throw new Exception(this + " doesn't have a main ability! Please set one using SetMainAbility()");
+                
+                mainAbility.Use();
+                
                 currentState = State.MainAttack;
 
                 abilityDuration = basicAnimationDelay * (model.frameCount + 2);
                 abilityUseTime = Time.now;
 
-                usingAbility = true;
-                
-                mainAbility.Use();
+                usingAbility = true;                
             }
         }
 
-        public void UseSpecialAbility()
+        protected void UseSpecialAbility()
         {
-            if (!usingAbility)
+            if (abilityCanBeUsed)
             {
-                if (specialAbility == null)
-                {
-                    throw new Exception(this + " doesn't have a special ability! Please set one using SetMainAbility()");
-                }
+                abilityCanBeUsed = false;
+                
+                if (specialAbility == null) throw new Exception(this + " doesn't have a special ability! Please set one using SetMainAbility()");
 
                 specialAbility.Use();
 
@@ -144,16 +138,13 @@ namespace GXPEngine.Entities
 
         
 
-        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0, int unusedPixels = 0)
+        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0, int newUnusedPixels = 0)
         {
             model = new AnimationSprite(modelPath, columns, rows, addCollider: false);
 
             model.SetXY(x,y);
             
-            xVectorModel = new Vector2(model.x - unusedPixels, model.x);
-            
-            
-            
+            xVectorModel = new Vector2(model.x - newUnusedPixels, model.x);
 
             modelColumns = columns;
             modelRows = rows;
@@ -195,16 +186,9 @@ namespace GXPEngine.Entities
             if (damageable)
             {
                 health -= amount;
-            
-                if (health <= 0)
-                {
-                    Kill();  
-                }
-
+                if (health <= 0) Kill();
                 damageTime = Time.now;
                 damageable = false;
-                
-                model.SetColor(0,255,0);
                 Console.WriteLine(model.name + ", " + "Health: " + health);
             }
         }
@@ -233,18 +217,12 @@ namespace GXPEngine.Entities
         {
             if (usingAbility)
             {
-                if (Time.now - abilityUseTime > abilityDuration)
-                {
-                    usingAbility = false;
-                }
+                if (Time.now - abilityUseTime > abilityDuration) usingAbility = false;
             }
 
             if (!abilityCanBeUsed)
             {
-                if (Time.now - abilityUseTime > abilityCooldown)
-                {
-                    abilityCanBeUsed = true;
-                }
+                if (Time.now - abilityUseTime > abilityCooldown) abilityCanBeUsed = true; 
             }
             
             
@@ -259,20 +237,16 @@ namespace GXPEngine.Entities
                 canvas.visible = false;
             }
             
-            if (model == null)
-            {
-                throw new Exception(this.name + " is lacking a model! Assign one using SetModel()");
-            }
+            if (model == null) throw new Exception(this.name + " is lacking a model! Assign one using SetModel()");
+            
             
             
             model.Animate(Time.deltaTime);
             UpdateState();
 
             //Updates movement and fixes mirror
-            if (velocity != new Vector2(0, 0) && !usingAbility)
-            {
-                UpdateMovement();
-            } else velocity.Set(0,0);
+            if (velocity != new Vector2(0, 0) && !usingAbility) UpdateMovement();
+            else velocity.Set(0,0);
             
             
             //Debugging
@@ -282,22 +256,13 @@ namespace GXPEngine.Entities
                 canvas.ShapeAlign(CenterMode.Min,CenterMode.Min);
                 canvas.Rect(0,0,width,height);
             }
-            else
-            {
-                canvas.ClearTransparent();
-            }
+            else canvas.ClearTransparent();
+            
 
             //Invincibility frames
-            if (Time.now - damageTime > invincibilityDuration)
-            {
-                damageable = true;
-                model.SetColor(255, 0, 0);
-            }
+            if (Time.now - damageTime > invincibilityDuration) damageable = true;
 
-            if (!damageable)
-            {
-                model.alpha = Utils.Random(60, 100);
-            }
+            model.alpha = damageable ? 1 : Utils.Random(60, 100);
             
             UpdateAnimation();
         }
@@ -342,15 +307,9 @@ namespace GXPEngine.Entities
             
             Mirror(mirrored,false);
 
-            if (mainAbility != null)
-            {
-                mainAbility.Mirror(mirrored,false);
-            }
+            if (mainAbility != null) mainAbility.Mirror(mirrored,false);
 
-            if (specialAbility != null)
-            {
-                specialAbility.Mirror(mirrored,false);
-            }
+            if (specialAbility != null) specialAbility.Mirror(mirrored,false);
 
         }
 
@@ -370,17 +329,7 @@ namespace GXPEngine.Entities
         /// </summary>
         private void UpdateState()
         {
-            if (!usingAbility)
-            {
-                if (velocity.Magnitude() == 0)
-                {
-                    currentState = State.Stand;
-                }
-                else if (currentState != State.Walk)
-                {
-                    currentState = State.Walk;
-                }
-            }
+            if (!usingAbility) {currentState = velocity.Magnitude() == 0 ? State.Stand : State.Walk;}
         }
         
         /// <summary>

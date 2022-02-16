@@ -55,7 +55,7 @@ namespace GXPEngine.Abilities
     /// <summary>
     /// Seed for the seed shooter
     /// </summary>
-    public class Seed : Projectile
+    public class Seed : Projectile  
     {
         public Seed(Vector2 setDirection, float setSpeed, float setDamage, Entity parent) : base(setDirection, setSpeed, setDamage, parent, 
             "hitboxes/seed.png", 1, 1) {}
@@ -66,10 +66,6 @@ namespace GXPEngine.Abilities
     /// </summary>
     public class Meatball : Projectile
     {
-        private float speed;
-        private float damage;
-        private Entity actualParent;
-
         public Meatball(Vector2 setDirection, float setSpeed, float setDamage, Entity parent) : base(setDirection, setSpeed, setDamage, parent,
             "hitboxes/meat_ball.png", 1, 1) {}
     }

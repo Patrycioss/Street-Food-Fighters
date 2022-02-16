@@ -46,7 +46,7 @@ namespace GXPEngine.Entities
          idleAnimationDelay = 100;
          walkAnimationDelay = 40;
 
-         basicAnimationDelay = 120;
+         basicAnimationDelay = 100;
          specialAnimationDelay = 100;
          
          
@@ -65,7 +65,7 @@ namespace GXPEngine.Entities
          
          SetMainAbility(new PizzaBite());
          
-         health = 2.0f;
+         health = 3.0f;
          speed = 0.2f;
             
          attackRadius = 100;

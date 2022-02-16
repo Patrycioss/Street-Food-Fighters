@@ -17,7 +17,7 @@ namespace GXPEngine
    
         private Sprite[] hearts;              
     
-        public Hud() : base(false)
+        public Hud()
         {
             canvas = new EasyDraw(game.width, game.height, false);
             TiledLoader loader = new TiledLoader("tiled/hud.tmx", canvas, addColliders: false); //load 

@@ -10,7 +10,7 @@ namespace GXPEngine.Abilities
         public BurgerPunch() : base("hitboxes/burger_punch.png", 1, 1)
         {
             xCoordinates = new Vector2(-width, width * 1.5f);
-            damage = 1;
+            damage = 2;
             y = -1.5f * height;
             alpha = 50;
             attackDuration = 300;
@@ -50,7 +50,7 @@ namespace GXPEngine.Abilities
     {
         public BurgerExplosion() : base("hitboxes/burger_explosion.png", 1, 1)
         {
-            xCoordinates = new Vector2(-width * 20, -width/2.25f);
+            xCoordinates = new Vector2(-width*0.5f, -width/2.25f);
             damage = 2;
             y =  -0.75f*height;
             alpha = 50;
@@ -94,7 +94,6 @@ namespace GXPEngine.Abilities
     public class MeatballShooter : Ability
     {
         private float speed;
-        private Vector2 direction;
         public MeatballShooter() : base("hitboxes/meat_ball.png",1,1)
         {
             damage = 3;

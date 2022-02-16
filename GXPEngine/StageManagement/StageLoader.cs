@@ -9,7 +9,7 @@ namespace GXPEngine.StageManagement
     /// </summary>
     public static class StageLoader
     {
-        private static Stage currentStage;
+        public static Stage currentStage;
         
         /// <summary>
         /// Load in a new stage and get rid of the previous one if there is still one
