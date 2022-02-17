@@ -17,6 +17,8 @@ namespace GXPEngine
 		private bool isGameOver = false;
 		private bool isMenu = true;
 
+		// private Sprite background;
+
 		private Sound music;
 		
 		private MyGame() : base(1366, 768, false, pVSync: true)
@@ -94,6 +96,10 @@ namespace GXPEngine
 		{
 			if (gameOver != null && gameOver.destroyMe)
 			{
+				StageLoader.LoadStage(Stages.Test);
+
+				hud = new Hud();
+				AddChild(hud);
 				isGameOver = false;
 				gameOver.LateDestroy();
 			}

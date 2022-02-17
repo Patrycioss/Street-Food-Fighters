@@ -13,21 +13,21 @@ namespace GXPEngine.Entities
          unusedPixels = 256;
          
          idleAnimationDelay = 100;
-         walkAnimationDelay = 40;
+         walkAnimationDelay = 35;
 
          basicAnimationDelay = 60;
-         specialAnimationDelay = 100;
+         specialAnimationDelay = 70;
 
 
 
          idleCycle = new Vector2(25, 5);
          walkingCycle = new Vector2(0, 25);
          mainCycle = new Vector2(30, 11);
-         specialCycle = new Vector2(41, 12);
+         specialCycle = new Vector2(41, 13);
 
          
          
-         SetModel("models/burger_woman_test.png",9,6, -40,-110);
+         SetModel("models/burger_woman_grid.png",9,6, -40,-110);
          SetBodyHitbox("hitboxes/burger_woman.png", -25,-model.height*0.8f);
          health = 3.0f;
          speed = 0.7f;
@@ -41,7 +41,7 @@ namespace GXPEngine.Entities
    {
       public PastaMan() : base("hitboxes/pasta_man.png")
       {
-         SetModel("models/pasta_man.png",53,1,-40,-110);
+         SetModel("models/pasta_man_grid.png",9,6,-40,-110);
          SetBodyHitbox("hitboxes/pasta_man.png", -25, -model.height*0.8f);
          health = 3.0f;
          speed = 0.7f;

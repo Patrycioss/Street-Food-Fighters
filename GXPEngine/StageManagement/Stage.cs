@@ -89,7 +89,10 @@ namespace GXPEngine.StageManagement
                         break;
                     
                     case 4:
-                        //Add lollipop thing
+                        AnimatedDecoration lollipop = new AnimatedDecoration("models/lollipop.png", 24, 1, 50);
+                        lollipop.SetXY(x-128,y-32);
+                        lollipop.SetScaleXY(1.25f);
+                        AddChild(lollipop);
                         break;
                     
                     case 5:

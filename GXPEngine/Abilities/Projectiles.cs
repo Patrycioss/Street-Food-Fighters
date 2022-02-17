@@ -26,7 +26,7 @@ namespace GXPEngine.Abilities
             Move(speed * Time.deltaTime * direction.x, speed * Time.deltaTime * direction.y);
             
             //Destroys the projectile if it gets too far away from the player to prevent unseen projectiles from lagging the game
-            if (DistanceTo(myGame.player) > 10000)
+            if (DistanceTo(myGame.player) > 1200)
             {
                 Destroy();
             }

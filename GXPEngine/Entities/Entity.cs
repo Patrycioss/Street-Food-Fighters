@@ -98,7 +98,7 @@ namespace GXPEngine.Entities
             abilityCanBeUsed = true;
 
 
-            abilityDuration = 500;
+            abilityDuration = 700;
             abilityCooldown = 1500;
         }
         
@@ -186,6 +186,7 @@ namespace GXPEngine.Entities
         {
             bodyHitbox = new Sprite(path)
             {
+                visible = false,
                 alpha = 170,
                 collider = {isTrigger = true},
                 x = newX,
