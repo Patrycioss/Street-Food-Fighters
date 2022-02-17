@@ -1,4 +1,6 @@
-﻿namespace GXPEngine
+﻿using System;
+
+namespace GXPEngine
 {
     /// <summary>
     /// Class for animated decorations
@@ -7,8 +9,11 @@
     {
         private int cycleDuration;
         private int cycleStart;
+        private bool paused;
+
+        private bool destroyOnFinish;
         
-        public AnimatedDecoration(string path, int cols, int rows, byte delay, bool stopAfterOneCycle = false) : base(path, cols, rows, addCollider:false)
+        public AnimatedDecoration(string path, int cols, int rows, byte delay, bool stopAfterOneCycle = false, bool paused = false, bool destroyWhenFinished = false) : base(path, cols, rows, addCollider:false)
         {
             _animationDelay = delay;
 
@@ -17,20 +22,39 @@
                 cycleDuration = (frameCount-2) * _animationDelay;
                 cycleStart = Time.now;
             }
+
+            destroyOnFinish = destroyWhenFinished;
+            
+            this.paused = paused;
         }
 
         void Update()
         {
-            if (cycleDuration != 0)
+            if (!paused)
             {
-                if (!(Time.now - cycleStart > cycleDuration))
+                if (cycleDuration != 0)
                 {
-                    Animate(Time.deltaTime);
-                }
+                    if (!(Time.now - cycleStart > cycleDuration))
+                    {
+                        Animate(Time.deltaTime);
+                    }
+                    else if (destroyOnFinish)
+                    {
+                        LateDestroy();
+                    }
 
+                }
+                else Animate(Time.deltaTime);
             }
-            else Animate(Time.deltaTime);
-            
+        }
+
+        public void UnPause()
+        {
+            if (paused)
+            {
+                paused = false;
+                cycleStart = Time.now;
+            }
         }
     }
 }

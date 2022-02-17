@@ -112,6 +112,8 @@ namespace GXPEngine.Entities
          SetHitSound("sounds/tomato_damage.wav");
          
          model.SetScaleXY(2.0f);
+         
+         SetDeathAnimation("placeholders/barry.png",7,1,200);
       }
    }
 

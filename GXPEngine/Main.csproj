@@ -41,7 +41,6 @@
     <Compile Include="Abilities\Projectiles.cs" />
     <Compile Include="AnimatedDecoration.cs" />
     <Compile Include="Barrier.cs" />
-    <Compile Include="DeathAnimation.cs" />
     <Compile Include="Entities\Characters.cs" />
     <Compile Include="Entities\Enemy.cs" />
     <Compile Include="Entities\Entity.cs" />

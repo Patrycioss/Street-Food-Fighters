@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using GXPEngine.Abilities;
 using GXPEngine.Core;
 using GXPEngine.StageManagement;
@@ -75,7 +76,7 @@ namespace GXPEngine.Entities
         private float deathSoundVolume;
         
         //Death
-        private DeathAnimation deathAnimation;
+        private AnimatedDecoration deathAnimation;
 
 
         /// <summary>
@@ -147,9 +148,11 @@ namespace GXPEngine.Entities
             AddChild(specialAbility);
         }
 
-        protected void SetDeathAnimation(string path, int cols, int rows, int frames, int duration, byte delay)
+        protected void SetDeathAnimation(string path, int cols, int rows, byte delay)
         {
-            deathAnimation = new DeathAnimation(path, cols, rows, frames, duration, delay);
+            deathAnimation = new AnimatedDecoration(path, cols, rows, delay, true, true, true);
+            deathAnimation.visible = false;
+
         }
 
         
@@ -253,13 +256,16 @@ namespace GXPEngine.Entities
         /// </summary>
         protected virtual void Kill()
         {
-            this.LateDestroy();
-
             if (deathAnimation != null)
             {
                 deathAnimation.SetXY(x,y);
-                deathAnimation.Unpause();
+                deathAnimation.visible = true;
+                deathAnimation.UnPause();
+                StageLoader.AddObject(deathAnimation);
+
+
             }
+            LateDestroy();
         }
 
         /// <summary>
