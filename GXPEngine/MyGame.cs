@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GXPEngine.Core;
 using GXPEngine.Entities;
 using GXPEngine.StageManagement;
@@ -9,8 +10,13 @@ namespace GXPEngine
 	{
 		public Player player;
 		public Hud hud;
+		private GameOver gameOver;  
+		private Menu menu;          
 		private int scrollX;
-		
+
+		private bool isGameOver = false;
+		private bool isMenu = true;
+
 		private Sprite background;
 
 		private Sound music;
@@ -25,36 +31,107 @@ namespace GXPEngine
 			debugMode = false;
 		
 			background = new Sprite("background.png",addCollider:false);
+			/*
 			AddChild(background);
 
 			StageLoader.LoadStage(Stages.Test);
 			
 			hud = new Hud();    
 			AddChild(hud);
+			*/
+
+			menu = new Menu();  //StartMenu
+			AddChild(menu);
 		}
 	
 		void Update()
 		{
-			if (Input.GetKeyUp(Key.B))
+			if (!isGameOver && player != null && hud != null && !isMenu)    //Update for Level
 			{
-				foreach (GameObject gameObject in StageLoader.GetChildren())
+				if (Input.GetKeyUp(Key.B))
 				{
-					gameObject.debugMode = !gameObject.debugMode;
+					foreach (GameObject gameObject in StageLoader.GetChildren())
+					{
+						gameObject.debugMode = !gameObject.debugMode;
+					}
+				}
+
+				if (Input.GetKeyUp(Key.C))
+				{
+					Console.WriteLine(player.chargedAmount);
+				}
+
+				Scroll();
+
+				if (player.health <= 0)
+				{
+					Console.WriteLine("player health" + player.health);
+					isGameOver = true;
+					GameOver();
 				}
 			}
-
-			if (Input.GetKeyUp(Key.C))
+			else if (isGameOver && !isMenu) //for Game Over
 			{
-				Console.WriteLine(player.chargedAmount);
+				RemoveGameOver();
 			}
-			
-			Scroll();
+			else if (!isGameOver && isMenu)
+			{
+				RemoveMenu();
+			}
 		}
-		
+
+		/// <summary>
+		/// show game over screen until G is pressed
+		/// </summary>
+		private void GameOver()
+		{
+			//play Animation until last frame
+			StageLoader.ClearCurrentStage();
+			List<GameObject> children = GetChildren();
+			foreach (GameObject child in children)
+			{
+				child.Destroy();
+			}
+			//Create game over screen with last from of Game Over Animation (Image), overlay the button controls :
+			gameOver = new GameOver(this.hud);
+			AddChild(gameOver);
+		}
+
+		/// <summary>
+		/// Destroy Game Over Screen when moving to the Level
+		/// </summary>
+		private void RemoveGameOver()
+		{
+			if (gameOver != null && gameOver.destroyMe)
+			{
+				//background = new Sprite("background.png", addCollider: false);
+				//AddChild(background);
+
+				StageLoader.LoadStage(Stages.Test);
+
+				hud = new Hud();
+				AddChild(hud);
+				isGameOver = false;
+				gameOver.LateDestroy();
+			}
+		}
+		/// <summary>
+		/// Destroy Menu when moving the the Level, needs destroyMe from Menu to activate
+		/// </summary>
+		private void RemoveMenu()
+		{
+			if (menu != null && menu.destroyMe)
+			{
+				isMenu = false;
+				menu.LateDestroy();
+			}
+		}
+
 		void Scroll()
 		{
 			if (player != null && StageLoader.currentStage != null)
 			{
+
 				//If the player is to the left of the center of the screen it will move to the left with the player until it hits the start of the stage
 				if (player.x + StageLoader.currentStage.x < scrollX)
 				{
