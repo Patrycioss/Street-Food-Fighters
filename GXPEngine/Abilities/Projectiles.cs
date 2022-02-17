@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GXPEngine.Core;
 using GXPEngine.Entities;
 using GXPEngine.StageManagement;
@@ -12,6 +13,8 @@ namespace GXPEngine.Abilities
         protected Entity actualParent;
         protected Vector2 direction;
 
+        private List<Entity> entitiesHit;
+
 
         protected Projectile(Vector2 setDirection, float setSpeed, float setDamage, Entity parent, string path, int cols, int rows) : base(path,cols,rows)
         {
@@ -19,6 +22,7 @@ namespace GXPEngine.Abilities
             speed = setSpeed;
             damage = setDamage;
             actualParent = parent;
+            entitiesHit = new List<Entity>();
         }
 
         protected void Update()
@@ -43,9 +47,13 @@ namespace GXPEngine.Abilities
             {
                 if (entity.entityType != actualParent.entityType)
                 {
-                    if (HitTest(entity.bodyHitbox))
+                    if (!entitiesHit.Contains(entity))
                     {
-                        entity.Damage(damage);
+                        if (HitTest(entity.bodyHitbox))
+                        {
+                            entity.Damage(damage);
+                            entitiesHit.Add(entity);
+                        }
                     }
                 }
             }
