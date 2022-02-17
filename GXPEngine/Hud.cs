@@ -8,8 +8,8 @@ namespace GXPEngine
     {
         private readonly EasyDraw canvas;      //show and update data on canvas
 
-        //enemies killed: kill count still needs to be displayed in HUD
         public int killCount;
+        private int scoreCount;                //display killCount x 100
 
 
         private Vector2 scorePos;
@@ -38,6 +38,7 @@ namespace GXPEngine
 
             hearts = new Sprite[(int)myGame.player.health]; //instatiate amount, each indivual object will be instantiated in AddHeart()
             killCount = 0;
+            scoreCount = 0;
 
             //does not create the sprite from tiled
             loader.AddManualType("hearts");
@@ -180,6 +181,8 @@ namespace GXPEngine
         public void AddScore()
         {
             killCount++; //kill count still needs to be displayed in HUD
+            scoreCount = killCount * 100;
+            Console.WriteLine("killCount" + killCount);
             UpdateCanvas();
         }
 
@@ -222,7 +225,7 @@ namespace GXPEngine
         {
             canvas.ClearTransparent();
             canvas.TextSize(20);
-            canvas.Text("Score : " + killCount.ToString(), scorePos.x, scorePos.y);
+            canvas.Text("Score : " + scoreCount.ToString(), scorePos.x, scorePos.y);
             if (myGame.player.chargedAmount < 1)
             {
                 specialBar.visible = false;     //only show 
