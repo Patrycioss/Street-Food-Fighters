@@ -17,7 +17,7 @@ namespace GXPEngine
 		private bool isGameOver = false;
 		private bool isMenu = true;
 
-		private Sprite background;
+		// private Sprite background;
 
 		private Sound music;
 		
@@ -30,10 +30,10 @@ namespace GXPEngine
 			
 			debugMode = false;
 		
-			background = new Sprite("background.png",addCollider:false);
-			/*
-			AddChild(background);
+			// background = new Sprite("background.png",addCollider:false);
+			
 
+			/*
 			StageLoader.LoadStage(Stages.Test);
 			
 			hud = new Hud();    
@@ -61,7 +61,6 @@ namespace GXPEngine
 					Console.WriteLine(player.chargedAmount);
 				}
 
-				Scroll();
 
 				if (player.health <= 0)
 				{
@@ -78,6 +77,9 @@ namespace GXPEngine
 			{
 				RemoveMenu();
 			}
+			
+			Scroll();
+
 		}
 
 		/// <summary>
@@ -104,8 +106,8 @@ namespace GXPEngine
 		{
 			if (gameOver != null && gameOver.destroyMe)
 			{
-				//background = new Sprite("background.png", addCollider: false);
-				//AddChild(background);
+				// background = new Sprite("background.png", addCollider: false);
+				// AddChild(background);
 
 				StageLoader.LoadStage(Stages.Test);
 
@@ -151,8 +153,6 @@ namespace GXPEngine
 				{
 					StageLoader.currentStage.x = -StageLoader.currentStage.stageWidth + game.width;
 				}
-
-				background.x = StageLoader.currentStage.x;
 			}
 		}
 	
