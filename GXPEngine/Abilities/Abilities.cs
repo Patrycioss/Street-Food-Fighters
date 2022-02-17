@@ -71,13 +71,14 @@ namespace GXPEngine.Abilities
         {
             damage = 1;
             speed = 0.7f;
-            xCoordinates = new Vector2(0, width);
+            xCoordinates = new Vector2(-width*2.0f, width);
             y = -0.75f * height;
             coolDown = 500;
         }
 
         protected override void Action()
         {
+            Entity parent = (Entity) this.parent;
             Vector2 playerPos = InverseTransformPoint(myGame.player.x, myGame.player.y);
 
             Vector2 direction = playerPos - new Vector2(parent.parent.x, parent.parent.y);
@@ -87,8 +88,14 @@ namespace GXPEngine.Abilities
 
             Seed seed = new Seed(direction,speed,damage, (Entity) parent);
      
-            StageLoader.AddObject(seed);
-            seed.SetXY(parent.x,parent.y - 50);
+            
+            
+            myGame.AddChild(seed);
+            Console.WriteLine(parent.x);
+            
+            seed.SetXY(parent.x,parent.y);
+            
+
         }
     }   
 
@@ -97,7 +104,7 @@ namespace GXPEngine.Abilities
         private float speed;
         public MeatballShooter() : base("hitboxes/basically_nothing.png",1,1)
         {
-            damage = 3;
+            damage = 2;
             speed = 1.0f;
             xCoordinates = new Vector2(0, width-10);
             y = -0.7f * height;

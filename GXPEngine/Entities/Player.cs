@@ -41,7 +41,7 @@ namespace GXPEngine.Entities
             swapDelay = 2000;
             
             entityType = "player";
-            invincibilityDuration = 1000;
+            invincibilityDuration = 1500;
             triggerDelay = 2000;
 
             canUseSpecial = true;

@@ -59,10 +59,7 @@ namespace GXPEngine.Abilities
     {
         public Seed(Vector2 setDirection, float setSpeed, float setDamage, Entity parent) : base(setDirection, setSpeed,
             setDamage, parent,
-            "models/seeds.png", 1, 1)
-        {
-            SetColor(255, 204, 102);
-        }
+            "models/seeds.png", 1, 1) {}
     }
     
     /// <summary>

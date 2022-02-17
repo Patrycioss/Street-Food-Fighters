@@ -26,7 +26,7 @@ namespace GXPEngine
 			music = new Sound("sounds/music.wav", true, true);
 			music.Play(volume: 0.5f);
 
-			scrollX = width / 2;
+			scrollX = (int) (width / 1.5f);
 			
 			debugMode = false;
 

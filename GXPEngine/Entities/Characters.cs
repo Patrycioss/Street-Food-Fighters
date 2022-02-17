@@ -41,7 +41,7 @@ namespace GXPEngine.Entities
    {
       public PastaMan() : base("hitboxes/pasta_man.png")
       {
-         SetModel("models/pasta_man_grid.png",9,6,-40,-110);
+         SetModel("models/pasta_man_grid.png",9,5,-40,-110);
          SetBodyHitbox("hitboxes/pasta_man.png", -25, -model.height*0.8f);
          health = 3.0f;
          speed = 0.7f;
@@ -59,8 +59,8 @@ namespace GXPEngine.Entities
 
          idleCycle = new Vector2(25, 5);
          walkingCycle = new Vector2(0, 25);
-         mainCycle = new Vector2(30, 11);
-         specialCycle = new Vector2(41, 12);
+         mainCycle = new Vector2(31, 11);
+         specialCycle = new Vector2(41, 4);
       }  
    }
 
