@@ -97,8 +97,8 @@ namespace GXPEngine
                 //problem with this approach: characters cannot be selected from the start. fixed character model
                 case "characterSmall":
 
-                    characterSmall[0] = new Sprite("models/burger_woman_idle.png", addCollider: false);
-                    characterSmall[1] = new Sprite("models/pasta_man_1.png", addCollider: false);
+                    characterSmall[0] = new Sprite("models/burgerwoman.png", addCollider: false);
+                    characterSmall[1] = new Sprite("models/pastaman.png", addCollider: false);
                     foreach (Sprite smallChar in characterSmall)
                     {
                         smallChar.SetXY(obj.X, obj.Y - obj.Height);
@@ -112,8 +112,8 @@ namespace GXPEngine
                     break;
 
                 case "characterBig":
-                    characterBig[0] = new Sprite("models/burger_woman_idle.png", addCollider: false);
-                    characterBig[1] = new Sprite("models/pasta_man_1.png", addCollider: false);
+                    characterBig[0] = new Sprite("models/burgerwoman.png", addCollider: false);
+                    characterBig[1] = new Sprite("models/pastaman.png", addCollider: false);
                     foreach (Sprite bigChar in characterBig)
                     {
                         bigChar.SetXY(obj.X, obj.Y - obj.Height);

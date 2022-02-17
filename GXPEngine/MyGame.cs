@@ -4,6 +4,10 @@ using GXPEngine.Core;
 using GXPEngine.Entities;
 using GXPEngine.StageManagement;
 
+
+/// <summary>
+/// THIS IS THE WORKING VERSION OF THE FINAL PRODUCT
+/// </summary>
 namespace GXPEngine
 {
 	public class MyGame : Game
@@ -12,7 +16,7 @@ namespace GXPEngine
 		public Hud hud;
 		private GameOver gameOver;  
 		private Menu menu;          
-		private int scrollX;
+		private float scrollX;			//int
 
 		private bool isGameOver = false;
 		private bool isMenu = true;
@@ -26,7 +30,7 @@ namespace GXPEngine
 			music = new Sound("sounds/music.wav", true, true);
 			music.Play(volume: 0.5f);
 
-			scrollX = width / 2;
+			scrollX = width / 1.5f;
 			
 			debugMode = false;
 
@@ -96,10 +100,10 @@ namespace GXPEngine
 		{
 			if (gameOver != null && gameOver.destroyMe)
 			{
-				StageLoader.LoadStage(Stages.Test);
+				//StageLoader.LoadStage(Stages.Test);
 
-				hud = new Hud();
-				AddChild(hud);
+				//hud = new Hud();
+				//AddChild(hud);
 				isGameOver = false;
 				gameOver.LateDestroy();
 			}

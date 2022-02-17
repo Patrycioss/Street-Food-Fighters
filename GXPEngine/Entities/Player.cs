@@ -12,7 +12,6 @@ namespace GXPEngine.Entities
         
         private int timeAtTrigger;
         private int triggerDelay;
-
         private BurgerWoman burgerWoman;
         private PastaMan pastaMan;
         public Entity currentCharacter { get; private set; }
@@ -35,13 +34,13 @@ namespace GXPEngine.Entities
 
             // AddChild(specialAbility);
             
-            health = 3.0f;
+            health = 5.0f;
             speed = currentCharacter.speed;
             
-            swapDelay = 2000;
+            swapDelay = 1000;
             
             entityType = "player";
-            invincibilityDuration = 1000;
+            invincibilityDuration = 1500;
             triggerDelay = 2000;
 
             canUseSpecial = true;

@@ -99,7 +99,7 @@ namespace GXPEngine.Entities
 
 
             abilityDuration = 700;
-            abilityCooldown = 1500;
+            abilityCooldown = 1000;
         }
         
         protected void UseMainAbility()
