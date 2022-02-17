@@ -79,6 +79,9 @@ namespace GXPEngine.Entities
         private AnimatedDecoration deathAnimation;
 
 
+        protected bool alreadyMirrored;
+
+
         /// <summary>
         /// All enemies and players are entities, all entities can move, are animated and have hitboxes.
         /// The sprite of this object functions as the hitbox for the feet of the entity, this hitbox is thus
@@ -148,16 +151,17 @@ namespace GXPEngine.Entities
             AddChild(specialAbility);
         }
 
-        protected void SetDeathAnimation(string path, int cols, int rows, byte delay)
+        protected void SetDeathAnimation(string path, int cols, int rows, byte delay, float scale = 1.0f)
         {
             deathAnimation = new AnimatedDecoration(path, cols, rows, delay, true, true, true);
+            deathAnimation.SetScaleXY(scale);
             deathAnimation.visible = false;
 
         }
 
         
 
-        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0)
+        protected void SetModel(string modelPath, int columns, int rows, float x = 0, float y = 0, bool alreadyMirrored = false)
         {
             model = new AnimationSprite(modelPath, columns, rows, addCollider: false);
 
@@ -175,6 +179,8 @@ namespace GXPEngine.Entities
             xVectorFeet = InverseTransformPoint(xVectorModel.x, xVectorModel.y);
             Vector2 canvasPos = model.InverseTransformPoint(this.x, this.y);
             canvas.SetXY(canvasPos.x,canvasPos.y);
+
+            this.alreadyMirrored = alreadyMirrored;
         }
         
         
@@ -258,12 +264,11 @@ namespace GXPEngine.Entities
         {
             if (deathAnimation != null)
             {
-                deathAnimation.SetXY(x,y);
+                deathAnimation.SetXY(x,y - 128);
                 deathAnimation.visible = true;
                 deathAnimation.UnPause();
+                deathAnimation.Mirror(mirrored,false);
                 StageLoader.AddObject(deathAnimation);
-
-
             }
             LateDestroy();
         }
@@ -353,7 +358,14 @@ namespace GXPEngine.Entities
         /// </summary>
         protected virtual void ChangeMirrorStatus()
         {
-            mirrored = (velocity.x < 0);
+            if (alreadyMirrored)
+            {
+                mirrored = !(velocity.x < 0);
+            }
+            else mirrored = velocity.x < 0;
+
+
+
         }
 
         /// <summary>

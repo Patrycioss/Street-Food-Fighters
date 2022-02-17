@@ -68,7 +68,7 @@ namespace GXPEngine.Entities
    {
       public PizzaZombie() : base("hitboxes/pizza_zombie_feet.png")
       {
-         SetModel("models/pizza_zombie.png",1,1,-40,-110);
+         SetModel("models/pizza_zombie.png",35,1,-40,-110, true);
          SetBodyHitbox("hitboxes/pizza_zombie.png", -20,-110);
             
          SetTarget(myGame.player);  
@@ -80,7 +80,18 @@ namespace GXPEngine.Entities
             
          attackRadius = 100;
          
-     
+         idleAnimationDelay = 100;
+         walkAnimationDelay = 70;
+
+         basicAnimationDelay = 100;
+
+         idleCycle = new Vector2(7,5);
+         walkingCycle = new Vector2(12,24);
+         mainCycle = new Vector2(1,6);
+         
+         model.SetScaleXY(2.0f);
+         
+         SetDeathAnimation("models/pizza_zombie_death.png", 6, 1, 50,2.0f);
       }
    }
 
@@ -88,7 +99,7 @@ namespace GXPEngine.Entities
    {
       public TomatoZombie() : base("hitboxes/tomato_zombie_feet.png")
       {
-         SetModel("models/tomato_zombie.png",35,1,-40,-110);
+         SetModel("models/tomato_zombie.png",35,1,-40,-110, true);
          SetBodyHitbox("hitboxes/tomato_zombie.png",-40,-110);
          
          SetTarget(myGame.player);

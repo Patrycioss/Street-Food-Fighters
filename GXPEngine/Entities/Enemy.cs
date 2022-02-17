@@ -77,7 +77,12 @@ namespace GXPEngine.Entities
 
         protected override void ChangeMirrorStatus()
         {
-            mirrored = (target.x < x);
+            if (alreadyMirrored)
+            {
+                mirrored = !(target.x < x);
+            }
+            else   mirrored = (target.x < x);
+         
         }
 
         protected override void Kill()
