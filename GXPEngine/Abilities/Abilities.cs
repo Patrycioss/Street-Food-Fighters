@@ -75,8 +75,8 @@ namespace GXPEngine.Abilities
         {
             damage = 1;
             speed = 0.7f;
-            xCoordinates = new Vector2(-width*2.0f, width);
-            y = -0.75f * height;
+            xCoordinates = new Vector2(0, -width);
+            y = 0;
             coolDown = 500;
 
             SetSound("sounds/seed_shooter.wav", 0.5f);
@@ -96,10 +96,11 @@ namespace GXPEngine.Abilities
      
             
             
-            myGame.AddChild(seed);
+            seed.SetXY(parent.x,parent.y - 50);
+
+            StageLoader.AddObject(seed);
             Console.WriteLine(parent.x);
             
-            seed.SetXY(parent.x,parent.y);
             
 
         }

@@ -80,7 +80,7 @@ namespace GXPEngine.Entities
             
          attackRadius = 100;
          
-         SetDeathAnimation("models/meatball.png",1,1,1,100,100);
+     
       }
    }
 
@@ -88,7 +88,7 @@ namespace GXPEngine.Entities
    {
       public TomatoZombie() : base("hitboxes/tomato_zombie_feet.png")
       {
-         SetModel("models/tomato_zombie.png",1,1,-40,-110);
+         SetModel("models/tomato_zombie.png",35,1,-40,-110);
          SetBodyHitbox("hitboxes/tomato_zombie.png",-40,-110);
          
          SetTarget(myGame.player);
@@ -98,9 +98,20 @@ namespace GXPEngine.Entities
          health = 2.0f;
          speed = 0.2f;
 
-         attackRadius = 500;
+         attackRadius = 400;
 
+         idleAnimationDelay = 100;
+         walkAnimationDelay = 70;
+
+         basicAnimationDelay = 100;
+
+         idleCycle = new Vector2(7,5);
+         walkingCycle = new Vector2(12,24);
+         mainCycle = new Vector2(1,6);
+         
          SetHitSound("sounds/tomato_damage.wav");
+         
+         model.SetScaleXY(2.0f);
       }
    }
 

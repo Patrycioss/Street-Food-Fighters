@@ -42,6 +42,7 @@ namespace GXPEngine.Entities
             entityType = "player";
             invincibilityDuration = 1500;
             triggerDelay = 2000;
+            timeAtTrigger = Time.now;
 
             canUseSpecial = true;
             necessaryCharge = 5;
@@ -145,7 +146,7 @@ namespace GXPEngine.Entities
                 {
                     if (DistanceTo(enemy) <= enemy.attackRadius)
                     {
-                        enemy.mainAbility.Use();
+                        enemy.UseMainAbility();
                     }
                 }
             }

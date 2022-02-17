@@ -102,7 +102,7 @@ namespace GXPEngine.Entities
             abilityCooldown = 1000;
         }
         
-        protected void UseMainAbility()
+        public void UseMainAbility()
         {
             if (abilityCanBeUsed)
             {
