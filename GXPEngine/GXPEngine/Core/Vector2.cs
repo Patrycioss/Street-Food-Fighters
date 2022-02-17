@@ -180,6 +180,7 @@ namespace GXPEngine.Core
         public void Normalize()
         {
             var m = Magnitude();
+
             if (m != 0) Divide(m);
             //else Console.WriteLine("Magnitude = 0, can't be normalized");
         }
