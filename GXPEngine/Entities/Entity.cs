@@ -194,6 +194,11 @@ namespace GXPEngine.Entities
         {
             if (damageable)
             {
+                if (this is Player)
+                {
+                    Console.WriteLine("REMOVING HEART");
+                    myGame.hud.RemoveHeart();
+                }
                 health -= amount;
                 if (health <= 0) Kill();
                 damageTime = Time.now;

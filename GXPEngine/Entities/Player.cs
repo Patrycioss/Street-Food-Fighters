@@ -117,7 +117,7 @@ namespace GXPEngine.Entities
         public override void Damage(float amount)
         {
             base.Damage(amount);
-            myGame.hud.RemoveHeart();
+            //hud heart removal in entity, otherwise heart display doesn't work
         }
      
         protected override void ChangeMirrorStatus()

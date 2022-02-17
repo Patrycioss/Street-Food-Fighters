@@ -83,10 +83,7 @@ namespace GXPEngine.Entities
         protected override void Kill()
         {
             myGame.player.AddCharge(1);
-            myGame.hud.killCount++;
-            
-            myGame.hud.ExternalCanvasUpdate();
-            
+            myGame.hud.AddScore();
             base.Kill();
         }
 
