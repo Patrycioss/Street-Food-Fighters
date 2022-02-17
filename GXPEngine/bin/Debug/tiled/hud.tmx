@@ -7,7 +7,7 @@
   <image source="../placeholders/circle.png" width="64" height="64"/>
  </tileset>
  <tileset firstgid="3" name="specialbarframe" tilewidth="550" tileheight="40" tilecount="1" columns="1">
-  <image source="../placeholders/specialbarframeTHIC.png" width="552" height="42"/>
+  <image source="../placeholders/specialbarframe.png" width="552" height="42"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="22" height="13">
   <data encoding="csv">

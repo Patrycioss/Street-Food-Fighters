@@ -1,6 +1,7 @@
 ﻿using System;
 using GXPEngine.Core;
 using TiledMapParser;
+using System.Drawing;
 
 namespace GXPEngine
 {
@@ -9,7 +10,7 @@ namespace GXPEngine
         private readonly EasyDraw canvas;      //show and update data on canvas
 
         public int killCount;
-        private int scoreCount;                //display killCount x 100
+        public int scoreCount { get; private set; }                //display killCount x 100
 
 
         private Vector2 scorePos;
@@ -24,9 +25,13 @@ namespace GXPEngine
 
         private Sprite burgerWoman;
         private Sprite pastaMan;
-        private Sprite specialBarFrame;         
+        private Sprite specialBarFrame;
         private Sprite specialBar;
         private Sprite[] hearts;
+
+        private Font scoringTextFont = Utils.LoadFont("fonts/HaarlemDeco.ttf", 30);
+        private Font scoringNumberFont = Utils.LoadFont("fonts/Underground.ttf", 30);
+
 
         public Hud() : base(false)
         {
@@ -51,6 +56,9 @@ namespace GXPEngine
             loader.LoadObjectGroups();
             loader.OnObjectCreated -= OnWeirdObjectCreated;
 
+
+            canvas.TextSize(20);
+            canvas.TextFont(scoringNumberFont);
             AddChild(canvas);
             UpdateCanvas();
         }
@@ -69,7 +77,6 @@ namespace GXPEngine
 
                 case "scorePoints":
                     scorePos.Set(obj.X, obj.Y);
-                    Console.WriteLine("scorePoints");
                     break;
 
                 case "specialBar":
@@ -224,8 +231,11 @@ namespace GXPEngine
         private void UpdateCanvas()
         {
             canvas.ClearTransparent();
-            canvas.TextSize(20);
-            canvas.Text("Score : " + scoreCount.ToString(), scorePos.x, scorePos.y);
+            canvas.TextFont(scoringTextFont);
+            canvas.Text("Score : ", scorePos.x, scorePos.y);
+            canvas.TextFont(scoringNumberFont);
+            canvas.Text("        " + scoreCount.ToString(), scorePos.x + 10, scorePos.y + 12);
+
             if (myGame.player.chargedAmount < 1)
             {
                 specialBar.visible = false;     //only show 
@@ -240,7 +250,8 @@ namespace GXPEngine
 
             }
 
-            Console.WriteLine("player charged amount: " + myGame.player.chargedAmount);
+            //Console.WriteLine("player charged amount: " + myGame.player.chargedAmount);
+
 
         }
 

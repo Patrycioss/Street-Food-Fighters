@@ -13,8 +13,6 @@ namespace GXPEngine
         private Sprite manual;  //= new Sprite ("manual.png", addCollider: false);   //show the controls of the game: maybe just use a button to make sprite: with manual visible and turn it off when pressed again
         private Sprite credits; //= new Sprite ("credits.png", addCollider: false);
 
-        private bool isManualVisible = false;       //press Basic Button: F
-        private bool isCreditsVisible = false;      //press Special Button G
 
         private EasyDraw canvas;                //canvas for displaying Text, make text blink if wanted
         public bool destroyMe { get; set; }
@@ -26,6 +24,7 @@ namespace GXPEngine
             AddChild(menuBackground);
 
             canvas = new EasyDraw(game.width, game.height);
+
         }
 
         private void DestroyMenu()

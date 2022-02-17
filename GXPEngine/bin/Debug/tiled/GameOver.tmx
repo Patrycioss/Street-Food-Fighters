@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="22" height="13" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="22">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="22" height="13" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="28">
  <tileset firstgid="1" name="colors" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="../placeholders/colors.png" width="64" height="64"/>
  </tileset>
@@ -27,14 +27,14 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="19" type="GameOver" x="375.08" y="162.036" width="636.462" height="198.613">
-   <text fontfamily="MS Shell Dlg 2" pixelsize="96" wrap="1" color="#ffffff" halign="center" valign="center">GAME OVER</text>
+  <object id="25" type="GameOver" x="361.352" y="105.607" width="636.462" height="198.613">
+   <text fontfamily="Ricks American NF" pixelsize="96" wrap="1" halign="center" valign="center">GAME OVER</text>
   </object>
-  <object id="20" x="485.773" y="384.439" width="379.97" height="82.6364">
-   <text fontfamily="MS Shell Dlg 2" pixelsize="48" wrap="1" color="#ffffff" halign="center" valign="center">Score:</text>
+  <object id="26" name="Score" type="Score" x="498.884" y="261.62" width="379.97" height="82.6364">
+   <text fontfamily="Haarlem Deco DEMO" pixelsize="48" wrap="1" halign="center" valign="center">Score:</text>
   </object>
-  <object id="21" type="GameOver" x="269.648" y="564.33" width="894.038" height="198.613">
-   <text fontfamily="MS Shell Dlg 2" pixelsize="64" wrap="1" color="#ffffff" halign="center" valign="center">HIGH FIVE TO RESTART</text>
+  <object id="27" type="HighFive" x="246.92" y="507.901" width="894.038" height="198.613">
+   <text fontfamily="Ricks American NF" pixelsize="64" wrap="1" halign="center" valign="center">HIGH FIVE TO RESTART!</text>
   </object>
  </objectgroup>
 </map>

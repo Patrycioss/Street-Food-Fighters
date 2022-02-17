@@ -17,8 +17,6 @@ namespace GXPEngine
 		private bool isGameOver = false;
 		private bool isMenu = true;
 
-		// private Sprite background;
-
 		private Sound music;
 		
 		private MyGame() : base(1366, 768, false, pVSync: true)
@@ -29,16 +27,6 @@ namespace GXPEngine
 			scrollX = width / 2;
 			
 			debugMode = false;
-		
-			// background = new Sprite("background.png",addCollider:false);
-			
-
-			/*
-			StageLoader.LoadStage(Stages.Test);
-			
-			hud = new Hud();    
-			AddChild(hud);
-			*/
 
 			menu = new Menu();  //StartMenu
 			AddChild(menu);
@@ -106,13 +94,6 @@ namespace GXPEngine
 		{
 			if (gameOver != null && gameOver.destroyMe)
 			{
-				// background = new Sprite("background.png", addCollider: false);
-				// AddChild(background);
-
-				StageLoader.LoadStage(Stages.Test);
-
-				hud = new Hud();
-				AddChild(hud);
 				isGameOver = false;
 				gameOver.LateDestroy();
 			}

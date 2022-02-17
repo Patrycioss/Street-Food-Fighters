@@ -182,14 +182,16 @@ namespace GXPEngine.Entities
         private void SwapCharacters()
         {
             swapSound.Play(volume: swapSoundVolume);
-            
+
             if (currentCharacter == burgerWoman)
             {
                 SetCurrentCharacter(pastaMan);
+                myGame.hud.PastaBig();
             }
             else
             {
                 SetCurrentCharacter(burgerWoman);
+                myGame.hud.BurgerBig();
             }
         }
 

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using TiledMapParser;
-using GXPEngine.StageManagement;
-using TiledMapParser;                                                                   // still need to display score count
+using GXPEngine.StageManagement;                                                                // still need to display score count
+using GXPEngine.Core;
 
 namespace GXPEngine
 {
@@ -18,27 +15,64 @@ namespace GXPEngine
         public bool destroyMe { get; private set; }
         private int score;                                                              //display the score in the canvas still needs to add it though
 
+        EasyDraw canvas;
+        private Font scoringFont;//canvas for showing the score
+
+
 
         public GameOver(Hud hud) : base()
         {
             destroyMe = false;
-            this.hud = hud;
+            //this.hud = hud;
+            this.score = hud.scoreCount;
+            scoringFont = Utils.LoadFont("fonts/Underground.ttf", 60);//canvas for showing the score
             Sprite background = new Sprite("gameOverPLACEHOLDER.png");                      //REPLACE TO GAME OVER SCREEN: USE RED FRAME WITH TOMATO SEEDS
             AddChild(background);
 
-            loader = new TiledLoader("tiled/GameOver.tmx", addColliders: false);
-            loader.rootObject = this;
-            loader.LoadObjectGroups();
+            canvas = new EasyDraw(game.width, game.height);
+            //canvas.SetXY(0,0);
 
-            //STILL NEED TO DO: Display the scores from hud into Game Over Screen
-            //Displa
+            canvas.TextSize(60);
+            canvas.TextFont(scoringFont);
+            canvas.Fill(0);
+            canvas.TextAlign(CenterMode.Max, CenterMode.Min);
+            //locanvas.Text("Score: " + score, game.width / 2, game.height / 2);
+            AddChild(canvas);
+
+            loader = new TiledLoader("tiled/GameOver.tmx", addColliders: false);
+            //loader.AddManualType("Score");
+
+            loader.rootObject = this;
+            loader.OnObjectCreated += OnWeirdObjectCreated;
+            loader.LoadObjectGroups();
+            loader.OnObjectCreated -= OnWeirdObjectCreated;
 
         }
+
+        private void OnWeirdObjectCreated(Sprite sprite, TiledObject obj)
+        {
+            switch (obj.Type)
+            {
+                case "Score":
+                    Console.WriteLine("display SCORE in GAMEOVER, x: {0}, y: {1}", obj.X, obj.Y);
+                    canvas.TextAlign(CenterMode.Center, CenterMode.Min);
+                    canvas.TextFont(scoringFont);
+
+                    canvas.Text("" + score, obj.X + obj.Width / 2, obj.Y + 100);
+
+                    break;
+
+            }
+        }
+
         public void DestroyGameOver()
         {
             myGame.AddChild(background);
-           
+            StageLoader.LoadStage(Stages.Test);
+            myGame.hud = new Hud();
+            myGame.AddChild(myGame.hud);
             destroyMe = true;           //actual destruction will be in myGame
+            Console.WriteLine("GAMEOVER DESTROY ME TRUE");
         }
         private void Update()
         {
