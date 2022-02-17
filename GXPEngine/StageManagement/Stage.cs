@@ -55,6 +55,8 @@ namespace GXPEngine.StageManagement
             
             Layer mainLayer = stageData.Layers[0];
             
+            AddChild(new Sprite("background.png", addCollider:false));
+            
             short [,] tileNumbers = mainLayer.GetTileArray();
             
             for (int col = 0; col < mainLayer.Width; col++)

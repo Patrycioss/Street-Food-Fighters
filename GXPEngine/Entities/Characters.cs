@@ -79,6 +79,8 @@ namespace GXPEngine.Entities
          speed = 0.2f;
             
          attackRadius = 100;
+         
+         SetDeathAnimation("models/meatball.png",1,1,1,100,100);
       }
    }
 
