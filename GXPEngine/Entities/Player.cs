@@ -49,6 +49,8 @@ namespace GXPEngine.Entities
 
             swapSound = new Sound("sounds/swap.wav");
             swapSoundVolume = 0.2f;
+            
+            SetHitSound("sounds/player_hit.wav", 0.2f);
         }
 
         protected override void Update()

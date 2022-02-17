@@ -46,7 +46,9 @@ namespace GXPEngine.Abilities
             
             //random time, so that the enemies aren't attacking all at once (only set once)
             attackDuration = Utils.Random (300, 1000);   
-            coolDown = Utils.Random(1000, 2500);       
+            coolDown = Utils.Random(1000, 2500); 
+            
+            SetSound("sounds/pizza_bite.wav", 0.05f);
         }
     }
 
@@ -61,6 +63,8 @@ namespace GXPEngine.Abilities
 
             attackDuration = 500;
             coolDown = 500;
+            
+            SetSound("sounds/burger_explosion.wav", 0.5f);
         }
     }
 
@@ -74,6 +78,8 @@ namespace GXPEngine.Abilities
             xCoordinates = new Vector2(-width*2.0f, width);
             y = -0.75f * height;
             coolDown = 500;
+
+            SetSound("sounds/seed_shooter.wav", 0.5f);
         }
 
         protected override void Action()

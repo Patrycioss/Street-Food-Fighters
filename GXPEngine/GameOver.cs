@@ -26,7 +26,7 @@ namespace GXPEngine
             //this.hud = hud;
             this.score = hud.scoreCount;
             scoringFont = Utils.LoadFont("fonts/Underground.ttf", 60);//canvas for showing the score
-            Sprite background = new Sprite("gameOverPLACEHOLDER.png");                      //REPLACE TO GAME OVER SCREEN: USE RED FRAME WITH TOMATO SEEDS
+            AnimationSprite background = new AnimatedDecoration("tomato_death.png", 10, 1, 200, true);                     //REPLACE TO GAME OVER SCREEN: USE RED FRAME WITH TOMATO SEEDS
             AddChild(background);
 
             canvas = new EasyDraw(game.width, game.height);
@@ -80,6 +80,8 @@ namespace GXPEngine
             {
                 DestroyGameOver();
             }
+            
+            
         }
     }
 }
