@@ -27,7 +27,7 @@ namespace GXPEngine.Entities
 
          
          
-         SetModel("models/burger_woman.png",53,1, -40,-110);
+         SetModel("models/burger_woman_test.png",9,6, -40,-110);
          SetBodyHitbox("hitboxes/burger_woman.png", -25,-model.height*0.8f);
          health = 3.0f;
          speed = 0.7f;
