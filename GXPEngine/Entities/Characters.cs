@@ -124,7 +124,7 @@ namespace GXPEngine.Entities
          
          model.SetScaleXY(2.0f);
          
-         SetDeathAnimation("placeholders/barry.png",7,1,200);
+         SetDeathAnimation("models/tomato_zombie_death.png",6,1,100, 2.0f);
       }
    }
 

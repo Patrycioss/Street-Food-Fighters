@@ -86,11 +86,13 @@ namespace GXPEngine.Abilities
         {
             Entity parent = (Entity) this.parent;
             Vector2 playerPos = InverseTransformPoint(myGame.player.x, myGame.player.y);
+            Vector2 parentPos = InverseTransformPoint(parent.x,parent.y);
 
-            Vector2 direction = playerPos - new Vector2(parent.parent.x, parent.parent.y);
+            Vector2 direction = playerPos - parentPos;
             
             direction.Normalize();
-            Console.WriteLine(direction);
+            
+            
 
             Seed seed = new Seed(direction,speed,damage, (Entity) parent);
      

@@ -264,7 +264,7 @@ namespace GXPEngine.Entities
         {
             if (deathAnimation != null)
             {
-                deathAnimation.SetXY(x,y - 128);
+                deathAnimation.SetXY(x - 32,y - 110);
                 deathAnimation.visible = true;
                 deathAnimation.UnPause();
                 deathAnimation.Mirror(mirrored,false);
