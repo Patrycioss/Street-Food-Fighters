@@ -10,8 +10,8 @@ namespace GXPEngine
     public class Menu : GameObject
     {
         Sprite background = new Sprite("background.png", addCollider: false);
-        private Sprite manual  = new Sprite ("manualPLACEHOLDER.png", addCollider: false);   //show the controls of the game: maybe just use a button to make sprite: with manual visible and turn it off when pressed again
-        private Sprite credits = new Sprite ("creditsPLACEHOLDER.png", addCollider: false);
+        private Sprite manual  = new Sprite ("manual.png", addCollider: false);   //show the controls of the game: maybe just use a button to make sprite: with manual visible and turn it off when pressed again
+        private Sprite credits = new Sprite ("credits.png", addCollider: false);
 
 
         private EasyDraw canvas;                //canvas for displaying Text, make text blink if wanted
