@@ -10,7 +10,18 @@ Play as the marvelous _**Burger Woman**_ or the amazing _**Pasta Man**_ in this 
 ![burgerWoman](https://user-images.githubusercontent.com/72610925/175650690-30792e31-4b57-43b1-a3cd-328f5c18e231.png) _____________________
 ![pastaMan](https://user-images.githubusercontent.com/72610925/175653524-6c53c13d-8d42-44b0-9619-30d1320bca2e.png)
 
+## Trailer
+
 [![Street Food Fighter](http://img.youtube.com/vi/iAdO8joY0Mg/0.jpg)](http://www.youtube.com/watch?v=iAdO8joY0Mg "Video Title")
+
+## Controls
+| Action          | Keys   |
+|-----------------|--------|
+| Walking         | `WASD` |
+| Main Ability    | `F`    |
+| Special Ability | `G`    |
+| Swap Characters | `S`    |
+
 
 
 ## Background Information
